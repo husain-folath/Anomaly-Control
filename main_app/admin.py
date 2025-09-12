@@ -1,3 +1,28 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import User, Entity, Incident, Report
 
-# Register your models here.
+# Customize the User admin
+class UserAdmin(BaseUserAdmin):
+    model = User
+    list_display = ('username', 'email', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
+    fieldsets = (
+        (None, {'fields': ('username', 'email', 'password')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login',)}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_active')}
+        ),
+    )
+    search_fields = ('email', 'username')
+    ordering = ('username',)
+
+# Register models
+admin.site.register(User, UserAdmin)
+admin.site.register(Entity)
+admin.site.register(Incident)
+admin.site.register(Report)

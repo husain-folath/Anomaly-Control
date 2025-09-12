@@ -75,8 +75,8 @@ WSGI_APPLICATION = 'anomalycontrol.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'anomalycontrol',
     }
 }
 
@@ -117,7 +117,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+LOGIN_URL = 'home'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+AUTH_USER_MODEL = "main_app.User"
