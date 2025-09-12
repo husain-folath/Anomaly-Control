@@ -1,4 +1,6 @@
-# catcollector/urls.py
+from django.urls import path
+from . import views # Import views to connect routes to view functions
 
-from django.contrib import admin
-from django.urls import path, include
+urlpatterns = [
+    path('', views.home, name='home'),
+]
