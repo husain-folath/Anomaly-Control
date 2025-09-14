@@ -1,0 +1,59 @@
+.reports-container {
+  margin: 30px auto;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.reports-container h1 {
+  margin-bottom: 20px;
+  color: #e63946;
+}
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #111;
+  color: #fff;
+}
+
+.reports-table th,
+.reports-table td {
+  border: 1px solid #444;
+  padding: 10px;
+  text-align: left;
+}
+
+.reports-table th {
+  background: #222;
+  color: #e63946;
+}
+
+.reports-table tr:nth-child(even) {
+  background: #1a1a1a;
+}
+
+.reports-table a {
+  color: #e63946;
+  text-decoration: none;
+}
+
+.reports-table a:hover {
+  text-decoration: underline;
+}
+
+.add-report {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.add-report .btn {
+  padding: 8px 15px;
+  background: #e63946;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.add-report .btn:hover {
+  background: #c82333;
+}
