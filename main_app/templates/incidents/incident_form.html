@@ -18,5 +18,6 @@
     <button type="submit" class="btn submit">
         {% if form.instance.pk %}Update{% else %}Create{% endif %}
     </button>
+    <a href="{% url 'incident_index' %}" class="btn back">Back</a>
 </form>
 {% endblock %}

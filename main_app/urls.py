@@ -27,6 +27,6 @@ urlpatterns = [
     path('incidents/<int:pk>/update/', views.IncidentUpdate.as_view(), name='incident_update'),
     path('incidents/<int:pk>/delete/', views.IncidentDelete.as_view(), name='incident_delete'),
 
-    # # Authentication
+    # Authentication
     path('accounts/signup/', views.signup, name='signup'),
 ]

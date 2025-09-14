@@ -1,5 +1,43 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1>Incidents</h1>
-<p>List of all incidents will be displayed here.</p>
+
+{% if incidents %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Anomaly</th>
+        <th>Reporter</th>
+        <th>Severity</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for incident in incidents %}
+      <tr>
+        <td>{{ incident.id }}</td>
+        <td><a href="{% url 'incident_detail' incident.id %}">{{ incident.title }}</a></td>
+        <td>{{ incident.anomaly.code }}</td>
+        <td>{{ incident.reporter.username }}</td>
+        <td>{{ incident.severity }}</td>
+        <td>{{ incident.status }}</td>
+        <td>{{ incident.date }}</td>
+        <td>
+          <a href="{% url 'incident_update' incident.id %}">Edit</a> |
+          <a href="{% url 'incident_delete' incident.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No incidents found.</p>
+{% endif %}
+
+<a href="{% url 'incident_create' %}" class="btn">Create New Incident</a>
 {% endblock %}

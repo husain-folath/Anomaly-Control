@@ -1,5 +1,23 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1>Incident Detail</h1>
-<p>Details for a single incident will go here.</p>
+
+<div class="incident-detail">
+  <p><strong>ID:</strong> {{ incident.id }}</p>
+  <p><strong>Title:</strong> {{ incident.title }}</p>
+  <p><strong>Anomaly:</strong> {{ incident.anomaly.code }}</p>
+  <p><strong>Reporter:</strong> {{ incident.reporter.username }}</p>
+  <p><strong>Severity:</strong> {{ incident.severity }}</p>
+  <p><strong>Status:</strong> {{ incident.status }}</p>
+  <p><strong>Date Reported:</strong> {{ incident.date }}</p>
+  <p><strong>Short Description:</strong></p>
+  <p>{{ incident.short_description }}</p>
+</div>
+
+<div class="actions">
+  <a href="{% url 'incident_update' incident.id %}" class="btn">Edit</a>
+  <a href="{% url 'incident_delete' incident.id %}" class="btn btn-danger">Delete</a>
+  <a href="{% url 'incident_index' %}" class="btn">Back to Incidents</a>
+</div>
 {% endblock %}
