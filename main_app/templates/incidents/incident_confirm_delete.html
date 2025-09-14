@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Delete Incident</h1>
+    <p>Are you sure you want to delete the incident: "{{ object }}"?</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn delete">Yes, delete</button>
+    <a href="{% url 'incident_index' %}" class="btn cancel">Cancel</a>
+</form>
+{% endblock %}

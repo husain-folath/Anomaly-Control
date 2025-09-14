@@ -20,12 +20,12 @@ urlpatterns = [
     path('reports/<int:pk>/update/', views.ReportUpdate.as_view(), name='report_update'),
     path('reports/<int:pk>/delete/', views.ReportDelete.as_view(), name='report_delete'),
 
-    # # Incidents
-    # path('incidents/', views.incident_index, name='incident_index'),
-    # path('incidents/<int:incident_id>/', views.incident_detail, name='incident_detail'),
-    # path('incidents/create/', views.IncidentCreate.as_view(), name='incident_create'),
-    # path('incidents/<int:pk>/update/', views.IncidentUpdate.as_view(), name='incident_update'),
-    # path('incidents/<int:pk>/delete/', views.IncidentDelete.as_view(), name='incident_delete'),
+    # Incidents
+    path('incidents/', views.incident_index, name='incident_index'),
+    path('incidents/<int:incident_id>/', views.incident_detail, name='incident_detail'),
+    path('incidents/create/', views.IncidentCreate.as_view(), name='incident_create'),
+    path('incidents/<int:pk>/update/', views.IncidentUpdate.as_view(), name='incident_update'),
+    path('incidents/<int:pk>/delete/', views.IncidentDelete.as_view(), name='incident_delete'),
 
     # # Authentication
     path('accounts/signup/', views.signup, name='signup'),

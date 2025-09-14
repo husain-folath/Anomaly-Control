@@ -11,10 +11,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from .models import Entity, Report
-from .forms import CustomUserCreationForm, ReportForm 
+from .models import Entity, Report, Incident
+from .forms import CustomUserCreationForm, ReportForm, IncidentForm
 # Import HttpResponse to send text-based responses
 from django.http import HttpResponse
+
 
 
 # Define the home view function
@@ -86,6 +87,37 @@ class ReportDelete(DeleteView):
     model = Report
     template_name = 'reports/report_confirm_delete.html'
     success_url = reverse_lazy('report_index')
+
+# FOR INCIDENTS
+# List all incidents
+def incident_index(request):
+    incidents = Incident.objects.all()
+    return render(request, 'incidents/index.html', {'incidents': incidents})
+
+# Show incident detail
+def incident_detail(request, incident_id):
+    incident = get_object_or_404(Incident, id=incident_id)
+    return render(request, 'incidents/detail.html', {'incident': incident})
+
+# Create a new incident
+class IncidentCreate(CreateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = 'incidents/incident_form.html'
+    success_url = reverse_lazy('incident_index')
+
+# Update an existing incident
+class IncidentUpdate(UpdateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = 'incidents/incident_form.html'
+    success_url = reverse_lazy('incident_index')
+
+# Delete an incident
+class IncidentDelete(DeleteView):
+    model = Incident
+    template_name = 'incidents/incident_confirm_delete.html'
+    success_url = reverse_lazy('incident_index')
 
 # signup
 def signup(request):
