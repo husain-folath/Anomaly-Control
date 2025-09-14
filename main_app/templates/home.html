@@ -6,9 +6,22 @@
 {% endblock %}
 
 {% block content %}
+{% comment %} <header class="header-bar">
+  <div class="header-left">
+    <h1 class="logo-text">SCP <span class="foundation">Foundation</span></h1>
+    <p class="motto">Secure, Contain, Protect</p>
+  </div>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+    </ul>
+  </nav>
+</header> {% endcomment %}
+
 <section class="logo-container">
   <div class="logo">
-    <img src="{% static 'images/anomaly_logo.svg' %}" alt="Anomaly Control Logo" />
+    <img src="{% static 'images/scp-foundation-logo.png' %}" alt="Anomaly Control Logo" />
   </div>
   <h1 class="site-title">Anomaly Control</h1>
   <p class="tagline">Securing, Containing, and Protecting the Unknown.</p>
@@ -27,12 +40,12 @@
 {% else %}
 <section class="dashboard-links">
   <h2>Welcome, {{ user.username }}</h2>
-  {% comment %} <ul>
-    <li><a href="{% url 'entity_index' %}">View Anomalies</a></li>
+  <ul>
+    <li><a href="{% url 'entity_index' %}">View Entities</a></li>
     <li><a href="{% url 'incident_index' %}">View Incidents</a></li>
     <li><a href="{% url 'report_index' %}">View Reports</a></li>
     <li><a href="{% url 'about' %}">About Anomaly Control</a></li>
-  </ul> {% endcomment %}
+  </ul>
 </section>
 {% endif %}
 {% endblock %}

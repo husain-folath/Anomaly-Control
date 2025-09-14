@@ -1,0 +1,76 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: black;
+  color: white;
+  line-height: 1.6;
+}
+
+/* Navbar Layout */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #000; /* Pure black */
+  padding: 0.5rem 2rem;
+  border-bottom: 2px solid #444; /* Government style divider */
+}
+
+.navbar-left img {
+  height: 40px;
+}
+
+.navbar-center .scp-logo {
+  height: 50px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #aaa; /* subtle hover */
+}
+
+/* Logout button */
+.logout-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.logout-btn:hover {
+  background: white;
+  color: black;
+}
+
+/* Page main content */
+main {
+  padding: 2rem;
+}

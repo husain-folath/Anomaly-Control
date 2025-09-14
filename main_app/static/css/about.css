@@ -1,0 +1,66 @@
+.about-container {
+  text-align: center;
+  padding: 50px 20px;
+  color: #f0f0f0;
+  background-color: #111; /* dark background for SCP vibe */
+}
+
+.about-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.about-subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #bbb;
+}
+
+.center-btn {
+  margin: 20px 0 50px 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #e63946;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 18px;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #ff4d5a;
+}
+
+.scp-sections {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.scp-card {
+  flex: 1 1 300px;
+  background: #1c1c1c;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 350px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  text-align: left;
+}
+
+.scp-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #e63946;
+}
+
+.scp-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ddd;
+}

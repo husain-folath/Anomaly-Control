@@ -1,9 +1,44 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<h1>About the Anomaly Control</h1>
-<hr />
-<p class="page-content">
-  I like long romantic walks down the produce aisle. Also, I am currently job
-  seeking!
-</p>
+<link rel="stylesheet" href="{% static 'css/about.css' %}" />
+
+<div class="about-container">
+  <h1 class="about-title">Welcome To Anomaly Control</h1>
+  <p class="about-subtitle">
+    Browse anomalies, containment procedures, and explore the world of the SCP Foundation.
+  </p>
+
+  <div class="center-btn">
+    <a href="{% url 'entity_index' %}" class="btn">View Database</a>
+  </div>
+
+  <div class="scp-sections">
+    <div class="scp-card">
+      <h2>Secure</h2>
+      <p>
+        The Foundation’s first priority is to <strong>secure</strong> anomalous
+        entities, objects, and phenomena before they can threaten the public.
+        This involves identifying potential anomalies, isolating them from
+        civilian exposure, and ensuring they are recovered with minimal disruption.
+      </p>
+    </div>
+    <div class="scp-card">
+      <h2>Contain</h2>
+      <p>
+        Once secured, anomalies must be <strong>contained</strong> to prevent
+        further harm. Containment procedures range from simple locked storage
+        to custom-built chambers, ensuring anomalies remain under constant surveillance.
+      </p>
+    </div>
+    <div class="scp-card">
+      <h2>Protect</h2>
+      <p>
+        The ultimate mission of the Foundation is to <strong>protect</strong>
+        humanity. By securing and containing anomalies, the Foundation shields
+        the public from panic and ensures anomalies are not exploited by hostile forces.
+      </p>
+    </div>
+  </div>
+</div>
 {% endblock %}
