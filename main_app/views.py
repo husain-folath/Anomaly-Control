@@ -2,7 +2,7 @@
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # Add the following import
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -10,14 +10,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Entity
-from .forms import CustomUserCreationForm
+from .models import Entity, Report
+from .forms import CustomUserCreationForm, ReportForm 
 # Import HttpResponse to send text-based responses
 from django.http import HttpResponse
 
-# Define the home view function
+
 # Define the home view function
 class Home(LoginView):
     template_name = 'home.html'
@@ -26,6 +25,8 @@ class Home(LoginView):
 def about(request):
     return render(request, 'about.html')
 
+
+#  FOR ENTITIES 
 def entity_index(request):
     entities = Entity.objects.all()
     return render(request, 'entities/index.html', {'entities': entities})
@@ -55,6 +56,38 @@ class EntityDelete(DeleteView):
     template_name = 'entities/entity_confirm_delete.html'
     success_url = reverse_lazy('entity_index')
 
+# FOR REPORTS
+# Function-based view for listing all reports
+def report_index(request):
+    reports = Report.objects.all()
+    return render(request, 'reports/index.html', {'reports': reports})
+
+# Function-based view for showing details of a single report
+def report_detail(request, report_id):
+    report = get_object_or_404(Report, id=report_id)
+    return render(request, 'reports/detail.html', {'report': report})
+
+# Class-based view for creating a new report
+class ReportCreate(CreateView):
+    model = Report
+    form_class = ReportForm
+    template_name = 'reports/report_form.html'
+    success_url = reverse_lazy('report_index')
+
+# Class-based view for updating an existing report
+class ReportUpdate(UpdateView):
+    model = Report
+    form_class = ReportForm
+    template_name = 'reports/report_form.html'
+    success_url = reverse_lazy('report_index')
+
+# Class-based view for deleting a report
+class ReportDelete(DeleteView):
+    model = Report
+    template_name = 'reports/report_confirm_delete.html'
+    success_url = reverse_lazy('report_index')
+
+# signup
 def signup(request):
     error_message = ''
     if request.method == 'POST':

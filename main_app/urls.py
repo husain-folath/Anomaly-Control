@@ -13,12 +13,12 @@ urlpatterns = [
     path('entities/<int:pk>/update/', views.EntityUpdate.as_view(), name='entity_update'),
     path('entities/<int:pk>/delete/', views.EntityDelete.as_view(), name='entity_delete'),
 
-    # # Reports
-    # path('reports/', views.report_index, name='report_index'),
-    # path('reports/<int:report_id>/', views.report_detail, name='report_detail'),
-    # path('reports/create/', views.ReportCreate.as_view(), name='report_create'),
-    # path('reports/<int:pk>/update/', views.ReportUpdate.as_view(), name='report_update'),
-    # path('reports/<int:pk>/delete/', views.ReportDelete.as_view(), name='report_delete'),
+    # Reports
+    path('reports/', views.report_index, name='report_index'),
+    path('reports/<int:report_id>/', views.report_detail, name='report_detail'),
+    path('reports/create/', views.ReportCreate.as_view(), name='report_create'),
+    path('reports/<int:pk>/update/', views.ReportUpdate.as_view(), name='report_update'),
+    path('reports/<int:pk>/delete/', views.ReportDelete.as_view(), name='report_delete'),
 
     # # Incidents
     # path('incidents/', views.incident_index, name='incident_index'),
