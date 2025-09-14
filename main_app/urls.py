@@ -6,12 +6,12 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('about/', views.about, name='about'),
 
-    # # Entities
-    # path('entities/', views.entity_index, name='entity_index'),
-    # path('entities/<int:entity_id>/', views.entity_detail, name='entity_detail'),
-    # path('entities/create/', views.EntityCreate.as_view(), name='entity_create'),
-    # path('entities/<int:pk>/update/', views.EntityUpdate.as_view(), name='entity_update'),
-    # path('entities/<int:pk>/delete/', views.EntityDelete.as_view(), name='entity_delete'),
+    # Entities
+    path('entities/', views.entity_index, name='entity_index'),
+    path('entities/<int:entity_id>/', views.entity_detail, name='entity_detail'),
+    path('entities/create/', views.EntityCreate.as_view(), name='entity_create'),
+    path('entities/<int:pk>/update/', views.EntityUpdate.as_view(), name='entity_update'),
+    path('entities/<int:pk>/delete/', views.EntityDelete.as_view(), name='entity_delete'),
 
     # # Reports
     # path('reports/', views.report_index, name='report_index'),

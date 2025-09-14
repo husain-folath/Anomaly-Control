@@ -9,7 +9,10 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
-
+from django.shortcuts import render, get_object_or_404
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Entity
 from .forms import CustomUserCreationForm
 # Import HttpResponse to send text-based responses
 from django.http import HttpResponse
@@ -22,6 +25,35 @@ class Home(LoginView):
 
 def about(request):
     return render(request, 'about.html')
+
+def entity_index(request):
+    entities = Entity.objects.all()
+    return render(request, 'entities/index.html', {'entities': entities})
+
+# Show a single entity’s detail page
+def entity_detail(request, entity_id):
+    entity = get_object_or_404(Entity, id=entity_id)
+    return render(request, 'entities/detail.html', {'entity': entity})
+
+# Create a new entity
+class EntityCreate(CreateView):
+    model = Entity
+    fields = '__all__'
+    template_name = 'entities/entity_form.html'
+    success_url = reverse_lazy('entity_index')
+
+# Update an entity
+class EntityUpdate(UpdateView):
+    model = Entity
+    fields = '__all__'
+    template_name = 'entities/entity_form.html'
+    success_url = reverse_lazy('entity_index')
+
+# Delete an entity
+class EntityDelete(DeleteView):
+    model = Entity
+    template_name = 'entities/entity_confirm_delete.html'
+    success_url = reverse_lazy('entity_index')
 
 def signup(request):
     error_message = ''
