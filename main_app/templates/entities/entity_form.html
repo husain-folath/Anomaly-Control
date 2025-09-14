@@ -16,8 +16,14 @@
     </h1>
 </div>
 
-<form method="post" class="form-container">
+<form method="post" enctype="multipart/form-data" class="form-container">
     {% csrf_token %}
+
+    {% if object and object.image %}
+        <p>Current Image:</p>
+        <img src="{{ object.image.url }}" alt="{{ object.name }}" style="max-width:200px;">
+    {% endif %}
+
     <table>
         {{ form.as_table }}
     </table>

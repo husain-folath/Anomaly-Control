@@ -44,12 +44,21 @@ class EntityCreate(CreateView):
     template_name = 'entities/entity_form.html'
     success_url = reverse_lazy('entity_index')
 
-# Update an entity
+    def form_valid(self, form):
+        # Make sure to handle file uploads
+        self.object = form.save()
+        return super().form_valid(form)
+
 class EntityUpdate(UpdateView):
     model = Entity
     fields = '__all__'
     template_name = 'entities/entity_form.html'
     success_url = reverse_lazy('entity_index')
+
+    def form_valid(self, form):
+        # Handle file uploads
+        self.object = form.save()
+        return super().form_valid(form)
 
 # Delete an entity
 class EntityDelete(DeleteView):

@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>Entity Detail</h1>
-<p>Details for a single entity will go here.</p>
+<h1>{{ entity.code }} - {{ entity.name }}</h1>
+
+{% if entity.image %}
+    <img src="{{ entity.image.url }}" alt="{{ entity.name }}" style="max-width:300px;">
+{% endif %}
+
+<h2>Description</h2>
+<p>{{ entity.description }}</p>
+
+<h2>Containment Procedures</h2>
+<p>{{ entity.containment_procedures }}</p>
+
+<a href="{% url 'entity_index' %}" class="btn">Back to Entities</a>
+<a href="{% url 'entity_update' entity.id %}" class="btn">Edit</a>
+<a href="{% url 'entity_delete' entity.id %}" class="btn delete">Delete</a>
 {% endblock %}

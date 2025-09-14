@@ -1,16 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
-from django.conf import settings 
+from django.conf import settings
 
 
 class User(AbstractUser):
     clearance_level = models.IntegerField(default=1)  # 1–5
     role = models.CharField(max_length=150)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # New field
 
     def __str__(self):
         return self.username
-    
+
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.id})
 
@@ -20,14 +21,13 @@ class Entity(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
     containment_procedures = models.TextField()
-    image = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(upload_to='entities/', blank=True, null=True)  # Changed from CharField
 
     def __str__(self):
         return f"{self.code} - {self.name}"
 
     def get_absolute_url(self):
         return reverse('entity_detail', kwargs={'pk': self.id})
-
 
 
 class Report(models.Model):
@@ -59,7 +59,7 @@ class Incident(models.Model):
         ('Under Investigation', 'Under Investigation'),
     ]
 
-    anomaly = models.ForeignKey('Entity', on_delete=models.CASCADE)   # link to anomaly
+    anomaly = models.ForeignKey(Entity, on_delete=models.CASCADE)  # link to anomaly
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # link to User
     title = models.CharField(max_length=200)
     severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES, default='Low')

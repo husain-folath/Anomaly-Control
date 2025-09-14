@@ -15,7 +15,7 @@
   <p class="error">{{ error_message }}</p>
 {% endif %}
 
-<form action="" method="post" class="form-container" autocomplete="off">
+<form action="" method="post" class="form-container" autocomplete="off" enctype="multipart/form-data">
   {% csrf_token %}
   
   <div class="form-fields">
