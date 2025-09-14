@@ -2,24 +2,49 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Entity, Incident, Report
 
+
 # Customize the User admin
 class UserAdmin(BaseUserAdmin):
     model = User
-    list_display = ('username', 'email', 'is_staff', 'is_active')
-    list_filter = ('is_staff', 'is_active')
-    fieldsets = (
-        (None, {'fields': ('username', 'email', 'password')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login',)}),
+
+    # Show more fields in the list view
+    list_display = (
+        'username',
+        'email',
+        'first_name',
+        'last_name',
+        'clearance_level',
+        'role',
+        'is_staff',
+        'is_active',
     )
-    add_fieldsets = (
+    list_filter = ('is_staff', 'is_active', 'clearance_level', 'role')
+    search_fields = ('email', 'username', 'first_name', 'last_name')
+    ordering = ('username',)
+
+    # Extend the default fieldsets instead of replacing them
+    fieldsets = BaseUserAdmin.fieldsets + (
+        ("Anomaly Control Info", {"fields": ("clearance_level", "role")}),
+    )
+
+    add_fieldsets = BaseUserAdmin.add_fieldsets + (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_active')}
-        ),
+            'fields': (
+                'username',
+                'email',
+                'first_name',
+                'last_name',
+                'password1',
+                'password2',
+                'clearance_level',
+                'role',
+                'is_staff',
+                'is_active',
+            ),
+        }),
     )
-    search_fields = ('email', 'username')
-    ordering = ('username',)
+
 
 # Register models
 admin.site.register(User, UserAdmin)
