@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/entities/entity-index.css' %}" />
+{% endblock %}
 
 {% block content %}
 <h1>Entities</h1>
@@ -32,5 +37,5 @@
     <p>No entities found.</p>
 {% endif %}
 
-<a href="{% url 'entity_create' %}" class="btn">Add New Entity</a>
+<a href="{% url 'entity_create' %}" class="btn add-entity">Add New Entity</a>
 {% endblock %}

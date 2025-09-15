@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/entities/entity-detail.css' %}" />
+{% endblock %}
+
 {% block content %}
 <h1>{{ entity.code }} - {{ entity.name }}</h1>
 

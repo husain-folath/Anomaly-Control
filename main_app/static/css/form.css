@@ -1,0 +1,90 @@
+/* form.css */
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.page-header img {
+  width: 80px;
+  height: auto;
+}
+
+/* Error Message */
+.error {
+  color: #d9534f;
+  background-color: #fbeaea;
+  border: 1px solid #f5c2c2;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form Container */
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Form Fields */
+.form-fields p {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-fields label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-fields input,
+.form-fields select,
+.form-fields textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-fields input:focus,
+.form-fields select:focus,
+.form-fields textarea:focus {
+  border-color: #0077cc;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,119,204,0.15);
+}
+
+/* Submit Button */
+.btn.submit {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0077cc;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn.submit:hover {
+  background-color: #005fa3;
+}
