@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from .models import Entity, Report, Incident
 from .forms import CustomUserCreationForm, ReportForm, IncidentForm
+from django.db import models  # <-- add this
 
 User = get_user_model()
 
@@ -42,6 +43,12 @@ def about(request):
 def entity_index(request):
     allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
     entities = Entity.objects.filter(object_class__in=allowed_classes)
+
+    # Search/filter by code or name
+    query = request.GET.get('q')
+    if query:
+        entities = entities.filter(models.Q(code__icontains=query) | models.Q(name__icontains=query))
+
     return render(request, 'entities/index.html', {'entities': entities})
 
 @login_required
@@ -74,8 +81,18 @@ class EntityDelete(LoginRequiredMixin, DeleteView):
 # ======================
 @login_required
 def report_index(request):
-    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
-    reports = Report.objects.filter(anomaly__object_class__in=allowed_classes)
+    reports = Report.objects.all()
+
+    query = request.GET.get('q')
+    if query:
+        reports = reports.filter(
+            Q(id__icontains=query) |
+            Q(anomaly__code__icontains=query) |
+            Q(user__username__icontains=query) |
+            Q(summary__icontains=query) |
+            Q(created_at__icontains=query)
+        )
+
     return render(request, 'reports/index.html', {'reports': reports})
 
 @login_required
@@ -106,11 +123,28 @@ class ReportDelete(LoginRequiredMixin, DeleteView):
 # ======================
 # INCIDENTS
 # ======================
+from django.db.models import Q
+
 @login_required
 def incident_index(request):
-    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
-    incidents = Incident.objects.filter(anomaly__object_class__in=allowed_classes)
+    # Start with all incidents (or filter by clearance if you have that logic)
+    incidents = Incident.objects.all()
+
+    # Search/filter
+    query = request.GET.get('q')
+    if query:
+        incidents = incidents.filter(
+            Q(id__icontains=query) |
+            Q(title__icontains=query) |
+            Q(anomaly__code__icontains=query) |
+            Q(reporter__username__icontains=query) |
+            Q(severity__icontains=query) |
+            Q(status__icontains=query) |
+            Q(date__icontains=query)
+        )
+
     return render(request, 'incidents/index.html', {'incidents': incidents})
+
 
 @login_required
 def incident_detail(request, incident_id):

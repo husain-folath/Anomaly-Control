@@ -8,6 +8,14 @@
 {% block content %}
 <h1>Entities</h1>
 
+<!-- Search Bar -->
+<div class="search-container" style="text-align:center; margin-bottom:20px;">
+    <form method="get" action="">
+        <input type="text" name="q" placeholder="Search by code or name..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn">Search</button>
+    </form>
+</div>
+
 {% if entities %}
     <table class="table">
         <thead>

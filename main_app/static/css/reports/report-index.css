@@ -1,31 +1,28 @@
-/* =========================
-   Reports Page
-========================= */
-
-/* Page Title */
-.reports-container h1 {
+/* Reports Page */
+h1 {
   text-align: center;
-  color: #ff5c70; /* bright red accent */
-  font-size: 2rem;
+  color: #e63946;
   margin-bottom: 25px;
+  font-size: 2rem;
+  text-shadow: 0 0 3px #000;
   font-family: 'Consolas', monospace;
 }
 
 /* Table Styling */
 .reports-table {
   width: 100%;
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto 30px auto;
   border-collapse: collapse;
-  background: #121212; /* deep dark background */
+  background: #121212;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .reports-table thead {
-  background-color: #2c2c2c; /* dark gray for header */
-  color: #ff5c70; /* bright red for headers */
+  background-color: #2c2c2c;
+  color: #e63946;
 }
 
 .reports-table th,
@@ -33,7 +30,7 @@
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #333;
-  color: #ddd; /* light gray text */
+  color: #ddd;
   font-family: 'Consolas', monospace;
 }
 
@@ -49,11 +46,9 @@
   background-color: #2a2a2a;
 }
 
-/* Links inside table (View/Edit/Delete) */
 .reports-table td a {
-  color: #ff5c70;
+  color: #e63946;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
 .reports-table td a:hover {
@@ -63,60 +58,102 @@
 /* Buttons */
 .btn {
   display: inline-block;
-  padding: 10px 16px;
-  margin: 5px 8px;
-  background-color: #3a3a3a; /* dark gray */
-  color: #ff5c70; /* bright red accent */
+  padding: 8px 12px;
+  margin: 2px;
+  background-color: #3a3a3a;
+  color: #e63946;
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 0.9rem;
   font-family: 'Consolas', monospace;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .btn:hover {
   background-color: #5a5a5a;
 }
 
-/* Delete buttons in table if used */
 .btn.delete {
-  background-color: #880e1f;
+  background-color: #661111;
 }
 
 .btn.delete:hover {
-  background-color: #ff5c70;
-  color: #121212;
+  background-color: #a22222;
 }
 
-/* Create Report Button */
-.add-report {
+.btn.add-report-btn {
+  display: block;
+  max-width: 200px;
+  margin: 20px auto 0 auto;
   text-align: center;
-  margin-top: 20px;
+  background-color: #2b2b2b;
+  color: #e63946;
 }
 
-.add-report .btn {
-  display: inline-block;
-  width: 200px;              /* fixed width */
-  text-align: center;
-  background-color: #2b2b2b; /* dark gray */
-  color: #ff5c70;            /* bright red accent */
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
-  font-family: 'Consolas', monospace;
-  transition: background-color 0.2s;
-}
-
-.add-report .btn:hover {
+.btn.add-report-btn:hover {
   background-color: #444444;
 }
 
 /* No reports message */
-.reports-container p {
+p {
   text-align: center;
   color: #bbb;
   font-size: 1rem;
   margin-top: 20px;
+}
+
+/* Search Bar Styling */
+.search-container {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.search-container form {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.search-container input[type="text"],
+.search-container button {
+  height: 45px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 2px solid #3a3a3a;
+  outline: none;
+}
+
+.search-container input[type="text"] {
+  width: 320px;
+  max-width: 90%;
+  padding: 0 15px;
+  border-radius: 8px 0 0 8px;
+  background-color: #1a1a1a;
+  color: #eee;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.search-container input[type="text"]::placeholder {
+  color: #888;
+}
+
+.search-container input[type="text"]:focus {
+  border-color: #e63946;
+  background-color: #222;
+}
+
+.search-container button {
+  padding: 0 20px;
+  border-radius: 0 8px 8px 0;
+  border-left: none;
+  background-color: #3a3a3a;
+  color: #e63946;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-container button:hover {
+  background-color: #5a5a5a;
 }
 
 /* Responsive Table */
@@ -127,7 +164,7 @@
     font-size: 0.85rem;
   }
 
-  .reports-container h1 {
+  h1 {
     font-size: 1.5rem;
   }
 

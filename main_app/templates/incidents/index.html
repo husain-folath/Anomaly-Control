@@ -8,6 +8,14 @@
 {% block content %}
 <h1>Incidents</h1>
 
+<!-- Search Bar -->
+<div class="search-container">
+    <form method="get" action="">
+        <input type="text" name="q" placeholder="Search by ID, Anomaly code, Reporter, Severity, Status, or Date..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn">Search</button>
+    </form>
+</div>
+
 {% if incidents %}
   <table class="table">
     <thead>
@@ -44,5 +52,5 @@
   <p>No incidents found.</p>
 {% endif %}
 
-<a href="{% url 'incident_create' %}" class="btn">Create New Incident</a>
+<a href="{% url 'incident_create' %}" class="btn add-incident">Create New Incident</a>
 {% endblock %}

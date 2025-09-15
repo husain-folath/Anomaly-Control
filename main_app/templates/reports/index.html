@@ -9,6 +9,14 @@
 <div class="reports-container">
   <h1>Reports</h1>
 
+  <!-- Search Bar -->
+  <div class="search-container">
+      <form method="get" action="">
+          <input type="text" name="q" placeholder="Search by ID, Anomaly code, User, Summary, or Date..." value="{{ request.GET.q }}">
+          <button type="submit" class="btn">Search</button>
+      </form>
+  </div>
+
   {% if reports %}
     <table class="reports-table">
       <thead>
@@ -43,7 +51,7 @@
   {% endif %}
 
   <div class="add-report">
-    <a href="{% url 'report_create' %}" class="btn">+ Create Report</a>
+    <a href="{% url 'report_create' %}" class="btn add-report-btn">+ Create Report</a>
   </div>
 </div>
 {% endblock %}

@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/confirm_delete_form.css' %}" />
 {% endblock %}
 
 {% block content %}
 <div class="page-header">
   <h1>Delete Report</h1>
-  <p>Are you sure you want to delete the report: <strong>{{ object.title }}</strong>?</p>
+  <p>Are you sure you want to delete the report: <strong>{{ object.summary }}</strong>?</p>
 </div>
 
 <form method="post" class="form-container">

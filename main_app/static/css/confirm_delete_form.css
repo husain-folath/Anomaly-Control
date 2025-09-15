@@ -1,0 +1,94 @@
+/* =========================
+   Confirm Delete Form
+========================= */
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  color: #e63946; /* consistent red accent */
+  text-shadow: 0 0 3px #000;
+  font-family: 'Consolas', monospace;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  font-size: 1rem;
+  color: #bbb;
+  font-family: 'Consolas', monospace;
+}
+
+/* Form Container */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 25px;
+  background-color: #121212;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 5px 0 5px;
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+/* Delete Button */
+.btn.delete {
+  background-color: #661111;
+  color: #fff;
+  border: none;
+}
+
+.btn.delete:hover {
+  background-color: #a22222;
+  color: #121212;
+}
+
+/* Cancel Button */
+.btn.cancel {
+  background-color: #3a3a3a;
+  color: #e63946;
+  border: none;
+  text-decoration: none;
+}
+
+.btn.cancel:hover {
+  background-color: #5a5a5a;
+  color: #fff;
+}
+
+/* Paragraph below header (for Entities without a header paragraph) */
+.page-header + p {
+  text-align: center;
+  font-size: 1rem;
+  color: #bbb;
+  font-family: 'Consolas', monospace;
+  margin-bottom: 20px;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .form-container {
+    padding: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    margin: 8px 0 0 0;
+  }
+}
