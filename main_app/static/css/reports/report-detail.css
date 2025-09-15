@@ -1,56 +1,103 @@
+/* =========================
+   Report Detail Page
+========================= */
+
+/* Page Container */
 .report-detail-container {
-  margin: 30px auto;
   max-width: 800px;
-  padding: 20px;
-  background: #111;
-  border: 1px solid #444;
-  border-radius: 6px;
+  margin: 0 auto 30px auto;
+  padding: 20px 25px;
+  background-color: #121212; /* deep dark background */
+  border-radius: 8px;
+  color: #ddd; /* light gray text */
+  font-family: 'Consolas', monospace;
+  border: 1px solid #2c2c2c;
 }
 
+/* Page Title */
 .report-detail-container h1 {
-  color: #e63946;
-  margin-bottom: 15px;
+  text-align: center;
+  color: #ff5c70; /* bright red accent */
+  font-size: 2rem;
+  margin-bottom: 25px;
 }
 
+/* Meta Information */
 .report-meta p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #ccc;
+  margin-bottom: 12px;
 }
 
-.report-content {
-  margin-top: 20px;
+.report-meta p strong {
+  color: #ff5c70; /* bright red labels */
 }
 
-.report-content h2 {
-  margin-top: 15px;
-  color: #e63946;
-}
-
-.report-content p {
-  margin: 10px 0;
-  line-height: 1.5;
-}
-
-.report-actions {
-  margin-top: 25px;
-  display: flex;
-  gap: 10px;
-}
-
-.report-actions .btn {
-  padding: 8px 15px;
-  background: #e63946;
-  color: #fff;
-  border-radius: 4px;
+.report-meta a {
+  color: #ff5c70;
   text-decoration: none;
 }
 
-.report-actions .btn.delete {
-  background: #444;
-  color: #ff6b6b;
+.report-meta a:hover {
+  color: #ffa3a3;
+}
+
+/* Report Content Sections */
+.report-content h2 {
+  color: #ff5c70; /* bright red headings */
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.report-content p {
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+/* Action Buttons */
+.report-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.report-actions .btn {
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 5px 8px;
+  background-color: #3a3a3a; /* dark gray */
+  color: #ff5c70; /* bright red accent */
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Consolas', monospace;
+  transition: background-color 0.2s;
 }
 
 .report-actions .btn:hover {
-  opacity: 0.9;
+  background-color: #5a5a5a;
+}
+
+/* Delete Button */
+.report-actions .btn.delete {
+  background-color: #880e1f;
+}
+
+.report-actions .btn.delete:hover {
+  background-color: #ff5c70;
+  color: #121212;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .report-detail-container {
+    padding: 15px 20px;
+    font-size: 0.9rem;
+  }
+
+  .report-detail-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .report-actions .btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
 }
