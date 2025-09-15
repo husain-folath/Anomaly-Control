@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+  <div class="profile-header">
+    <img 
+      src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" 
+      alt="{{ user.username }}'s avatar" 
+      class="profile-avatar"
+    />
+    <h1 class="profile-username">{{ user.username }}</h1>
+    <p class="profile-role">{{ user.role|default:"No role set" }}</p>
+  </div>
+
+  <div class="profile-info">
+    <h2>Profile Information</h2>
+    <ul>
+      <li><strong>Email:</strong> {{ user.email }}</li>
+      <li><strong>First Name:</strong> {{ user.first_name }}</li>
+      <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+      <li><strong>Clearance Level:</strong> {{ user.clearance_level }}</li>
+      <li><strong>Role:</strong> {{ user.role }}</li>
+    </ul>
+  </div>
+
+  <div class="profile-actions">
+    <a href="{% url 'edit_profile' user.pk %}" class="btn edit-btn">Edit Profile</a>
+  </div>
+</div>
+{% endblock %}

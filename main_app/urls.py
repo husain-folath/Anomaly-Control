@@ -29,4 +29,8 @@ urlpatterns = [
 
     # Authentication
     path('accounts/signup/', views.signup, name='signup'),
+
+        # Profile
+    path('users/<int:pk>/', views.ProfileDetailView.as_view(), name='profile'),
+    path('users/<int:pk>/edit/', views.ProfileUpdateView.as_view(), name='edit_profile'),
 ]

@@ -3,143 +3,116 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
-# Add the following import
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import login
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import login, get_user_model
 from django.urls import reverse_lazy
 from .models import Entity, Report, Incident
 from .forms import CustomUserCreationForm, ReportForm, IncidentForm
-# Import HttpResponse to send text-based responses
-from django.http import HttpResponse
 
+User = get_user_model()
 
-
-# Define the home view function
+# ---------------- HOME & ABOUT ----------------
 class Home(LoginView):
     template_name = 'home.html'
-# main_app/views.py
 
 def about(request):
     return render(request, 'about.html')
 
-
-#  FOR ENTITIES 
+# ---------------- ENTITIES ----------------
+@login_required
 def entity_index(request):
     entities = Entity.objects.all()
     return render(request, 'entities/index.html', {'entities': entities})
 
-# Show a single entity’s detail page
+@login_required
 def entity_detail(request, entity_id):
     entity = get_object_or_404(Entity, id=entity_id)
     return render(request, 'entities/detail.html', {'entity': entity})
 
-# Create a new entity
-class EntityCreate(CreateView):
+class EntityCreate(LoginRequiredMixin, CreateView):
     model = Entity
     fields = '__all__'
     template_name = 'entities/entity_form.html'
     success_url = reverse_lazy('entity_index')
 
-    def form_valid(self, form):
-        # Make sure to handle file uploads
-        self.object = form.save()
-        return super().form_valid(form)
-
-class EntityUpdate(UpdateView):
+class EntityUpdate(LoginRequiredMixin, UpdateView):
     model = Entity
     fields = '__all__'
     template_name = 'entities/entity_form.html'
     success_url = reverse_lazy('entity_index')
 
-    def form_valid(self, form):
-        # Handle file uploads
-        self.object = form.save()
-        return super().form_valid(form)
-
-# Delete an entity
-class EntityDelete(DeleteView):
+class EntityDelete(LoginRequiredMixin, DeleteView):
     model = Entity
     template_name = 'entities/entity_confirm_delete.html'
     success_url = reverse_lazy('entity_index')
 
-# FOR REPORTS
-# Function-based view for listing all reports
+# ---------------- REPORTS ----------------
+@login_required
 def report_index(request):
     reports = Report.objects.all()
     return render(request, 'reports/index.html', {'reports': reports})
 
-# Function-based view for showing details of a single report
+@login_required
 def report_detail(request, report_id):
     report = get_object_or_404(Report, id=report_id)
     return render(request, 'reports/detail.html', {'report': report})
 
-# Class-based view for creating a new report
-class ReportCreate(CreateView):
+class ReportCreate(LoginRequiredMixin, CreateView):
     model = Report
     form_class = ReportForm
     template_name = 'reports/report_form.html'
     success_url = reverse_lazy('report_index')
 
-# Class-based view for updating an existing report
-class ReportUpdate(UpdateView):
+class ReportUpdate(LoginRequiredMixin, UpdateView):
     model = Report
     form_class = ReportForm
     template_name = 'reports/report_form.html'
     success_url = reverse_lazy('report_index')
 
-# Class-based view for deleting a report
-class ReportDelete(DeleteView):
+class ReportDelete(LoginRequiredMixin, DeleteView):
     model = Report
     template_name = 'reports/report_confirm_delete.html'
     success_url = reverse_lazy('report_index')
 
-# FOR INCIDENTS
-# List all incidents
+# ---------------- INCIDENTS ----------------
+@login_required
 def incident_index(request):
     incidents = Incident.objects.all()
     return render(request, 'incidents/index.html', {'incidents': incidents})
 
-# Show incident detail
+@login_required
 def incident_detail(request, incident_id):
     incident = get_object_or_404(Incident, id=incident_id)
     return render(request, 'incidents/detail.html', {'incident': incident})
 
-# Create a new incident
-class IncidentCreate(CreateView):
+class IncidentCreate(LoginRequiredMixin, CreateView):
     model = Incident
     form_class = IncidentForm
     template_name = 'incidents/incident_form.html'
     success_url = reverse_lazy('incident_index')
 
-# Update an existing incident
-class IncidentUpdate(UpdateView):
+class IncidentUpdate(LoginRequiredMixin, UpdateView):
     model = Incident
     form_class = IncidentForm
     template_name = 'incidents/incident_form.html'
     success_url = reverse_lazy('incident_index')
 
-# Delete an incident
-class IncidentDelete(DeleteView):
+class IncidentDelete(LoginRequiredMixin, DeleteView):
     model = Incident
     template_name = 'incidents/incident_confirm_delete.html'
     success_url = reverse_lazy('incident_index')
 
-# signup
+# ---------------- SIGNUP ----------------
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        # Include request.FILES to handle uploaded files like avatar
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            # Save the user
             user = form.save()
-            # Log them in
             login(request, user)
-            # Redirect to your app's homepage
             return redirect('home')
         else:
             error_message = 'Invalid sign up - try again'
@@ -148,3 +121,33 @@ def signup(request):
 
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
+
+# ---------------- USER PROFILES ----------------
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'users/profile.html'
+    context_object_name = 'user_obj'
+
+    def get_object(self):
+        obj = super().get_object()
+        if self.request.user == obj or self.request.user.is_staff:
+            return obj
+        return self.request.user
+
+class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = User
+    template_name = 'users/profile_form.html'
+    fields = ['first_name', 'last_name', 'email', 'avatar', 'clearance_level', 'role']
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'pk': self.object.pk})
+
+    def test_func(self):
+        obj = self.get_object()
+        return self.request.user == obj or self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_obj'] = self.object  # Add this line
+        return context
+

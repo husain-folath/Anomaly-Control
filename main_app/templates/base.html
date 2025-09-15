@@ -46,13 +46,18 @@
         </ul>
 
         <!-- Profile Circle -->
-        <div class="navbar-profile">
-          {% if user.is_authenticated and user.avatar %}
-            <img src="{{ user.avatar.url }}" alt="{{ user.username }} Avatar" class="profile-circle" />
-          {% else %}
-            <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" class="profile-circle" />
-          {% endif %}
-        </div>
+<div class="navbar-profile">
+  {% if user.is_authenticated %}
+    <a href="{% url 'profile' user.pk %}">
+      {% if user.avatar %}
+        <img src="{{ user.avatar.url }}" alt="{{ user.username }} Avatar" class="profile-circle" />
+      {% else %}
+        <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" class="profile-circle" />
+      {% endif %}
+    </a>
+  {% endif %}
+</div>
+
       </div>
     </nav>
 
