@@ -1,0 +1,83 @@
+/* =========================
+   Incident Detail Page
+========================= */
+
+/* Page Title */
+h1 {
+  text-align: center;
+  color: #ff5c70; /* bright red accent */
+  font-size: 2rem;
+  margin-bottom: 25px;
+  font-family: 'Consolas', monospace;
+}
+
+/* Incident Detail Container */
+.incident-detail {
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  padding: 20px 25px;
+  background-color: #121212; /* deep dark background */
+  border-radius: 8px;
+  color: #ddd; /* light gray text */
+  font-family: 'Consolas', monospace;
+  border: 1px solid #2c2c2c;
+}
+
+.incident-detail p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.incident-detail p strong {
+  color: #ff5c70; /* bright red labels */
+}
+
+/* Actions Buttons */
+.actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.actions .btn {
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 5px 8px;
+  background-color: #3a3a3a; /* dark gray */
+  color: #ff5c70; /* bright red accent */
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Consolas', monospace;
+  transition: background-color 0.2s;
+}
+
+.actions .btn:hover {
+  background-color: #5a5a5a;
+}
+
+/* Delete button */
+.actions .btn.btn-danger {
+  background-color: #880e1f;
+}
+
+.actions .btn.btn-danger:hover {
+  background-color: #ff5c70;
+  color: #121212;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .incident-detail {
+    padding: 15px 20px;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .actions .btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
