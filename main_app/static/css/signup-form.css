@@ -1,0 +1,139 @@
+/* =========================
+   Signup Form Styling
+========================= */
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.page-header h1 {
+  color: #ff5c70; /* bright red accent */
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-family: 'Consolas', monospace;
+}
+
+.page-header img {
+  width: 100px;
+  margin-top: 10px;
+}
+
+/* Error Message */
+.error {
+  color: #d9534f;
+  background-color: #2a1a1a;
+  border: 1px solid #880e1f;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form Container */
+.form-container {
+  max-width: 700px; /* made wider */
+  margin: 30px auto 50px auto;
+  padding: 25px;
+  background-color: #121212;
+  border: 1px solid #2c2c2c;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  color: #ddd;
+  font-family: 'Consolas', monospace;
+}
+
+/* =========================
+   Two-column form fields
+========================= */
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; /* space between columns */
+}
+
+.form-fields p {
+  flex: 1 1 48%; /* each field takes ~48% of the container */
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Full width fields like textarea or file input */
+.form-fields p.full-width {
+  flex: 1 1 100%;
+}
+
+/* Labels */
+.form-fields label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ff5c70; /* bright red labels */
+}
+
+/* Inputs, selects, textarea */
+.form-fields input,
+.form-fields select,
+.form-fields textarea {
+  padding: 6px 8px; /* reduced padding to make form shorter */
+  border: 1px solid #333;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #1a1a1a;
+  color: #ddd;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-fields input:focus,
+.form-fields select:focus,
+.form-fields textarea:focus {
+  border-color: #ff5c70;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,92,112,0.15);
+}
+
+/* Submit Button */
+.btn.submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #3a3a3a;
+  color: #ff5c70;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  font-family: 'Consolas', monospace;
+  transition: background-color 0.2s;
+}
+
+.btn.submit:hover {
+  background-color: #5a5a5a;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .form-fields p {
+    flex: 1 1 100%; /* stack on smaller screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .form-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .form-fields input,
+  .form-fields select,
+  .form-fields textarea {
+    font-size: 0.95rem;
+  }
+
+  .btn.submit {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}

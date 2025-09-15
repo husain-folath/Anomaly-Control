@@ -36,6 +36,7 @@
     <input type="hidden" name="next" value="{{ next }}">
     <button type="submit" class="btn submit">Login</button>
   </form>
+  <p class="signup-link">Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
 </section>
 {% else %}
 <section class="dashboard-links">

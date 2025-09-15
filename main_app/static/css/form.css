@@ -1,90 +1,160 @@
-/* form.css */
+/* =========================
+   Entity, Incident, and Report Forms
+========================= */
 
 /* Page Header */
-.page-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
 .page-header h1 {
-  font-size: 2rem;
-  color: #222;
-  margin-bottom: 1rem;
-}
-
-.page-header img {
-  width: 80px;
-  height: auto;
-}
-
-/* Error Message */
-.error {
-  color: #d9534f;
-  background-color: #fbeaea;
-  border: 1px solid #f5c2c2;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
   text-align: center;
-  font-weight: 500;
+  color: #ff5c70; /* bright red accent */
+  font-size: 2rem;
+  margin-bottom: 25px;
+  font-family: 'Consolas', monospace;
 }
 
 /* Form Container */
 .form-container {
-  max-width: 500px;
-  margin: 0 auto;
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #121212; /* deep dark background */
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  color: #ddd; /* light gray text */
+  font-family: 'Consolas', monospace;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-/* Form Fields */
-.form-fields p {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
+/* Table-based Form Fields */
+.form-container table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.form-fields label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #333;
+.form-container table td {
+  padding: 10px 8px;
+  vertical-align: top;
+  color: #ddd;
+  font-family: 'Consolas', monospace;
 }
 
-.form-fields input,
-.form-fields select,
-.form-fields textarea {
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #ccc;
+.form-container table label {
+  color: #ff5c70; /* bright red labels */
+  font-weight: bold;
+}
+
+.form-container table input,
+.form-container table select,
+.form-container table textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #333;
   border-radius: 6px;
+  background-color: #1a1a1a;
+  color: #ddd;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-fields input:focus,
-.form-fields select:focus,
-.form-fields textarea:focus {
-  border-color: #0077cc;
+.form-container table input:focus,
+.form-container table select:focus,
+.form-container table textarea:focus {
+  border-color: #ff5c70;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0,119,204,0.15);
+  box-shadow: 0 0 0 3px rgba(255,92,112,0.15);
+}
+
+/* Current Image Preview (for entity forms) */
+.form-container img {
+  display: block;
+  margin: 10px auto 20px auto;
+  max-width: 200px;
+  border-radius: 4px;
+  border: 1px solid #333;
 }
 
 /* Submit Button */
 .btn.submit {
-  display: block;
   width: 100%;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #fff;
-  background-color: #0077cc;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #3a3a3a; /* dark gray */
+  color: #ff5c70; /* bright red accent */
   border: none;
   border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
+  text-align: center;
+  font-family: 'Consolas', monospace;
   transition: background-color 0.2s;
 }
 
 .btn.submit:hover {
-  background-color: #005fa3;
+  background-color: #5a5a5a;
+}
+
+/* Back Button (for incident forms) */
+.btn.back {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 10px;
+  background-color: #2c2c2c; /* darker gray */
+  color: #ff5c70;
+  text-align: center;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn.back:hover {
+  background-color: #444444;
+}
+
+/* Error Messages */
+.error {
+  color: #d9534f; /* bright red */
+  background-color: #2a1a1a; /* dark background */
+  border: 1px solid #880e1f;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.error ul {
+  margin: 10px 0 0 20px;
+}
+
+.error li {
+  margin-bottom: 5px;
+}
+
+/* Optional Links in Forms */
+.form-container a {
+  color: #ff5c70;
+  text-decoration: none;
+}
+
+.form-container a:hover {
+  color: #ffa3a3;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  .form-container table td {
+    font-size: 0.9rem;
+    padding: 8px 6px;
+  }
+
+  .btn.submit,
+  .btn.back {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
 }
