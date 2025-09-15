@@ -15,6 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
             "password2",
             "clearance_level",
             "role",
+            'avatar',
         )
 
 

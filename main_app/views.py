@@ -132,13 +132,14 @@ class IncidentDelete(DeleteView):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        # Include request.FILES to handle uploaded files like avatar
+        form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             # Save the user
             user = form.save()
             # Log them in
             login(request, user)
-            # Redirect to your app's homepage (adjust if needed)
+            # Redirect to your app's homepage
             return redirect('home')
         else:
             error_message = 'Invalid sign up - try again'

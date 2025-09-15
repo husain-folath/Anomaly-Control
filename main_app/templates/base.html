@@ -44,6 +44,15 @@
             <li><a href="{% url 'home' %}">Login</a></li>
           {% endif %}
         </ul>
+
+        <!-- Profile Circle -->
+        <div class="navbar-profile">
+          {% if user.is_authenticated and user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="{{ user.username }} Avatar" class="profile-circle" />
+          {% else %}
+            <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" class="profile-circle" />
+          {% endif %}
+        </div>
       </div>
     </nav>
 
