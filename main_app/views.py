@@ -9,27 +9,47 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import login, get_user_model
 from django.urls import reverse_lazy
+from django.core.exceptions import PermissionDenied
 from .models import Entity, Report, Incident
 from .forms import CustomUserCreationForm, ReportForm, IncidentForm
 
 User = get_user_model()
 
-# ---------------- HOME & ABOUT ----------------
+# ======================
+# Clearance Mapping
+# ======================
+CLEARANCE_VISIBILITY = {
+    1: [Entity.ObjectClass.SAFE],
+    2: [Entity.ObjectClass.SAFE, Entity.ObjectClass.EUCLID],
+    3: [Entity.ObjectClass.SAFE, Entity.ObjectClass.EUCLID, Entity.ObjectClass.KETER],
+    4: [Entity.ObjectClass.SAFE, Entity.ObjectClass.EUCLID, Entity.ObjectClass.KETER, Entity.ObjectClass.THAUMIEL],
+    5: [Entity.ObjectClass.SAFE, Entity.ObjectClass.EUCLID, Entity.ObjectClass.KETER, Entity.ObjectClass.THAUMIEL, Entity.ObjectClass.ARCHON],
+}
+
+# ======================
+# HOME & ABOUT
+# ======================
 class Home(LoginView):
     template_name = 'home.html'
 
 def about(request):
     return render(request, 'about.html')
 
-# ---------------- ENTITIES ----------------
+# ======================
+# ENTITIES
+# ======================
 @login_required
 def entity_index(request):
-    entities = Entity.objects.all()
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    entities = Entity.objects.filter(object_class__in=allowed_classes)
     return render(request, 'entities/index.html', {'entities': entities})
 
 @login_required
 def entity_detail(request, entity_id):
     entity = get_object_or_404(Entity, id=entity_id)
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    if entity.object_class not in allowed_classes:
+        raise PermissionDenied("You do not have clearance for this entity.")
     return render(request, 'entities/detail.html', {'entity': entity})
 
 class EntityCreate(LoginRequiredMixin, CreateView):
@@ -49,15 +69,21 @@ class EntityDelete(LoginRequiredMixin, DeleteView):
     template_name = 'entities/entity_confirm_delete.html'
     success_url = reverse_lazy('entity_index')
 
-# ---------------- REPORTS ----------------
+# ======================
+# REPORTS
+# ======================
 @login_required
 def report_index(request):
-    reports = Report.objects.all()
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    reports = Report.objects.filter(anomaly__object_class__in=allowed_classes)
     return render(request, 'reports/index.html', {'reports': reports})
 
 @login_required
 def report_detail(request, report_id):
     report = get_object_or_404(Report, id=report_id)
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    if report.anomaly.object_class not in allowed_classes:
+        raise PermissionDenied("You do not have clearance for this report.")
     return render(request, 'reports/detail.html', {'report': report})
 
 class ReportCreate(LoginRequiredMixin, CreateView):
@@ -77,15 +103,21 @@ class ReportDelete(LoginRequiredMixin, DeleteView):
     template_name = 'reports/report_confirm_delete.html'
     success_url = reverse_lazy('report_index')
 
-# ---------------- INCIDENTS ----------------
+# ======================
+# INCIDENTS
+# ======================
 @login_required
 def incident_index(request):
-    incidents = Incident.objects.all()
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    incidents = Incident.objects.filter(anomaly__object_class__in=allowed_classes)
     return render(request, 'incidents/index.html', {'incidents': incidents})
 
 @login_required
 def incident_detail(request, incident_id):
     incident = get_object_or_404(Incident, id=incident_id)
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    if incident.anomaly.object_class not in allowed_classes:
+        raise PermissionDenied("You do not have clearance for this incident.")
     return render(request, 'incidents/detail.html', {'incident': incident})
 
 class IncidentCreate(LoginRequiredMixin, CreateView):
@@ -105,7 +137,9 @@ class IncidentDelete(LoginRequiredMixin, DeleteView):
     template_name = 'incidents/incident_confirm_delete.html'
     success_url = reverse_lazy('incident_index')
 
-# ---------------- SIGNUP ----------------
+# ======================
+# SIGNUP
+# ======================
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -122,7 +156,9 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
 
-# ---------------- USER PROFILES ----------------
+# ======================
+# USER PROFILES
+# ======================
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'users/profile.html'
@@ -148,6 +184,5 @@ class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_obj'] = self.object  # Add this line
+        context['user_obj'] = self.object
         return context
-
