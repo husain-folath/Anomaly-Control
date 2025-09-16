@@ -56,6 +56,13 @@ class Entity(models.Model):
     description = models.TextField()
     containment_procedures = models.TextField()
     image = models.ImageField(upload_to='entities/', blank=True, null=True)
+    created_by = models.ForeignKey(
+    User,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name="entities"
+)
 
     def __str__(self):
         return f"{self.code} - {self.name}"

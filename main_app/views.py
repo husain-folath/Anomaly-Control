@@ -13,7 +13,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db import models
 from .models import Entity, Report, Incident
-from .forms import CustomUserCreationForm, ReportForm, IncidentForm
+from .forms import CustomUserCreationForm, ReportForm, IncidentForm, EntityForm, UserUpdateForm
 
 User = get_user_model()
 
@@ -61,9 +61,14 @@ def entity_detail(request, entity_id):
 
 class EntityCreate(LoginRequiredMixin, CreateView):
     model = Entity
-    fields = '__all__'
+    form_class = EntityForm
     template_name = 'entities/entity_form.html'
     success_url = reverse_lazy('entity_index')
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class EntityUpdate(LoginRequiredMixin, UpdateView):
     model = Entity
@@ -207,8 +212,8 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
 class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
+    form_class = UserUpdateForm
     template_name = 'users/profile_form.html'
-    fields = ['first_name', 'last_name', 'email', 'avatar', 'clearance_level', 'role']
 
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.object.pk})
@@ -221,3 +226,4 @@ class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['user_obj'] = self.object
         return context
+
