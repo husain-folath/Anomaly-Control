@@ -86,7 +86,9 @@ class EntityDelete(LoginRequiredMixin, DeleteView):
 # ======================
 @login_required
 def report_index(request):
-    reports = Report.objects.all()
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    reports = Report.objects.filter(anomaly__object_class__in=allowed_classes)
+
     query = request.GET.get('q')
     if query:
         reports = reports.filter(
@@ -96,6 +98,7 @@ def report_index(request):
             Q(summary__icontains=query) |
             Q(created_at__icontains=query)
         )
+
     return render(request, 'reports/index.html', {'reports': reports})
 
 @login_required
@@ -133,7 +136,9 @@ class ReportDelete(LoginRequiredMixin, DeleteView):
 # ======================
 @login_required
 def incident_index(request):
-    incidents = Incident.objects.all()
+    allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
+    incidents = Incident.objects.filter(anomaly__object_class__in=allowed_classes)
+
     query = request.GET.get('q')
     if query:
         incidents = incidents.filter(
@@ -145,6 +150,7 @@ def incident_index(request):
             Q(status__icontains=query) |
             Q(date__icontains=query)
         )
+
     return render(request, 'incidents/index.html', {'incidents': incidents})
 
 @login_required
