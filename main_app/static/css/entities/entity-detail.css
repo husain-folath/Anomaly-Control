@@ -34,7 +34,7 @@ p {
 }
 
 /* Entity Image */
-img {
+.entity-img {
   display: block;
   margin: 0 auto 20px auto;
   border: 2px solid #333;

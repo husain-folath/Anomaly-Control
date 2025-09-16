@@ -9,8 +9,10 @@
 {% block content %}
 <h1>{{ entity.code }} - {{ entity.name }}</h1>
 
+<p><strong>Object Class:</strong> {{ entity.object_class }}</p>
+
 {% if entity.image %}
-    <img src="{{ entity.image.url }}" alt="{{ entity.name }}" style="max-width:300px;">
+    <img src="{{ entity.image.url }}" alt="{{ entity.name }}" class="entity-img" style="max-width:300px;">
 {% endif %}
 
 <h2>Description</h2>
