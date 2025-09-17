@@ -115,11 +115,14 @@ class ReportCreate(LoginRequiredMixin, CreateView):
     template_name = 'reports/report_form.html'
     success_url = reverse_lazy('report_index')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user  # pass user to the form
+        return kwargs
+
     def form_valid(self, form):
-        # Automatically set the current user as the reporter
         form.instance.user = self.request.user
         return super().form_valid(form)
-
 class ReportUpdate(LoginRequiredMixin, UpdateView):
     model = Report
     form_class = ReportForm
@@ -167,8 +170,12 @@ class IncidentCreate(LoginRequiredMixin, CreateView):
     template_name = 'incidents/incident_form.html'
     success_url = reverse_lazy('incident_index')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
-        # Automatically set the current user as the reporter
         form.instance.reporter = self.request.user
         return super().form_valid(form)
 

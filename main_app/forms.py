@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 from .models import User, Report, Incident, Entity
+
+User = get_user_model()
 
 # ------------------------
 # User Signup Form
@@ -28,14 +31,9 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
-
-
 # ------------------------
 # User Update Form
 # ------------------------
-from django import forms
-from .models import User
-
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
@@ -83,7 +81,6 @@ class UserUpdateForm(forms.ModelForm):
 # ------------------------
 # Entity Form
 # ------------------------
-
 class EntityForm(forms.ModelForm):
     class Meta:
         model = Entity
@@ -104,6 +101,8 @@ class EntityForm(forms.ModelForm):
             "containment_procedures": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
             "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }
+
+
 # ------------------------
 # Report Form
 # ------------------------
@@ -120,6 +119,15 @@ class ReportForm(forms.ModelForm):
             'summary': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # pass user from view
+        super().__init__(*args, **kwargs)
+
+        if user:
+            from .views import CLEARANCE_VISIBILITY
+            allowed_classes = CLEARANCE_VISIBILITY.get(user.clearance_level, [Entity.ObjectClass.SAFE])
+            self.fields['anomaly'].queryset = Entity.objects.filter(object_class__in=allowed_classes)
 
 
 # ------------------------
@@ -142,3 +150,12 @@ class IncidentForm(forms.ModelForm):
             'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            from .views import CLEARANCE_VISIBILITY
+            allowed_classes = CLEARANCE_VISIBILITY.get(user.clearance_level, [Entity.ObjectClass.SAFE])
+            self.fields['anomaly'].queryset = Entity.objects.filter(object_class__in=allowed_classes)

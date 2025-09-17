@@ -1,69 +1,159 @@
 # main_app/seed.py
+# anomalycontrol/main_app/seed.py
 
+import sys
 import os
 import django
-import requests
-from django.core.files.base import ContentFile
+import random
+from django.utils import timezone
 
 # -------------------------------
 # 1. Django setup
 # -------------------------------
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "anomalycontrol.settings")
 django.setup()
 
-from main_app.models import Entity
+from main_app.models import User, Entity, Report, Incident
 
 # -------------------------------
-# 2. SCP Data API functions
+# 2. Delete old data (exclude superuser)
 # -------------------------------
-BASE_URL = "http://localhost:3000/scp"
-
-def fetch_scp_data(scp_id):
-    url = f"{BASE_URL}/{scp_id}"
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()
-    return response.json()
+print("🗑️  Deleting old data...")
+Report.objects.all().delete()
+Incident.objects.all().delete()
+Entity.objects.all().delete()
+User.objects.exclude(is_superuser=True).delete()
 
 # -------------------------------
-# 3. Seed function
+# 3. Create Users
 # -------------------------------
-def seed_entities(limit=10):
-    # Delete all existing SCP entities
-    print("🗑️  Deleting existing SCP entities...")
-    Entity.objects.all().delete()
+print("👤 Creating users...")
+users_data = [
+    {"username": "alice", "email": "alice@example.com"},
+    {"username": "bob", "email": "bob@example.com"},
+    {"username": "charlie", "email": "charlie@example.com"},
+]
 
-    for scp_id in range(1, limit + 1):
-        scp_data = fetch_scp_data(scp_id)
+users = []
+for udata in users_data:
+    user = User.objects.create_user(
+        username=udata["username"],
+        email=udata["email"],
+        password="password123",
+        clearance_level=1,
+        role=User.Roles.CLASS_D
+    )
+    users.append(user)
 
-        code = scp_data.get("id", f"SCP-{scp_id:03d}")
-        name = scp_data.get("name", "Unknown Anomaly")
-        description = scp_data.get("description", "No description available.")
-        containment_procedures = scp_data.get("containment", "No containment procedures available.")
-        object_class = scp_data.get("class", "Euclid")  # Default to Euclid if not specified
+# -------------------------------
+# 4. Create Entities
+# -------------------------------
+print("🛸 Creating entities...")
 
-        entity = Entity(
-            code=code,
-            name=name,
-            object_class=object_class,
-            description=description,
-            containment_procedures=containment_procedures,
+object_classes = [
+    Entity.ObjectClass.SAFE,
+    Entity.ObjectClass.EUCLID,
+    Entity.ObjectClass.KETER,
+    Entity.ObjectClass.THAUMIEL,
+    Entity.ObjectClass.ARCHON
+]
+
+entities = []
+
+# Normal users: create 5 entities each
+for user in users:
+    for i in range(5):
+        e = Entity.objects.create(
+            code=f"{user.username.upper()}-E{i+1:02d}",
+            name=f"{user.username.capitalize()} Entity {i+1}",
+            object_class=random.choice(object_classes[:2]),  # safe or euclid
+            description="This is a test entity.",
+            containment_procedures="Standard containment procedures.",
+            created_by=user
+        )
+        entities.append(e)
+
+# Superuser: create 10 entities to push clearance level
+superuser = User.objects.filter(is_superuser=True).first()
+for i in range(10):
+    e = Entity.objects.create(
+        code=f"SUPER-E{i+1:02d}",
+        name=f"Super Entity {i+1}",
+        object_class=random.choice(object_classes),
+        description="Superuser entity.",
+        containment_procedures="Top-level containment.",
+        created_by=superuser
+    )
+    entities.append(e)
+
+# -------------------------------
+# 5. Create Reports
+# -------------------------------
+print("📝 Creating reports...")
+
+for user in users + [superuser]:
+    for i in range(5 if not user.is_superuser else 5):
+        r = Report.objects.create(
+            anomaly=random.choice(entities),
+            user=user,
+            summary=f"Report {i+1} by {user.username}",
+            description="This is a test report."
         )
 
-        # Handle image if available
-        image_url = scp_data.get("image")
-        if image_url:
-            try:
-                img_resp = requests.get(image_url, timeout=10)
-                img_resp.raise_for_status()
-                entity.image.save(f"{code}.jpg", ContentFile(img_resp.content), save=False)
-            except Exception as e:
-                print(f"⚠️ Failed to fetch image for {code}: {e}")
+# -------------------------------
+# 6. Create Incidents
+# -------------------------------
+print("🚨 Creating incidents...")
 
-        entity.save()
-        print(f"✅ Created: {entity}")
+for user in users + [superuser]:
+    for i in range(5 if not user.is_superuser else 5):
+        Incident.objects.create(
+            anomaly=random.choice(entities),
+            reporter=user,
+            title=f"Incident {i+1} by {user.username}",
+            severity=random.choice([s[0] for s in Incident.SeverityChoices.choices]),
+            short_description="Test incident description.",
+            status=random.choice([s[0] for s in Incident.StatusChoices.choices]),
+            date=timezone.now()
+        )
 
 # -------------------------------
-# 4. Run seeding
+# 7. Update Clearance Levels
 # -------------------------------
-if __name__ == "__main__":
-    seed_entities(limit=10)
+print("⚡ Updating clearance levels...")
+
+def update_clearance(user):
+    """Simplified: level = min(5, number_of_entities + reports + incidents // threshold)"""
+    count = (
+        user.entities.count() +
+        Report.objects.filter(user=user).count() +
+        Incident.objects.filter(reporter=user).count()
+    )
+    if count >= 20:
+        user.clearance_level = 5
+    elif count >= 15:
+        user.clearance_level = 4
+    elif count >= 10:
+        user.clearance_level = 3
+    elif count >= 5:
+        user.clearance_level = 2
+    else:
+        user.clearance_level = 1
+
+    # Ensure role is allowed
+    allowed_roles = {
+        1: [User.Roles.CLASS_D],
+        2: [User.Roles.CLASS_D, User.Roles.RESEARCHER, User.Roles.MEDICAL],
+        3: [User.Roles.RESEARCHER, User.Roles.MEDICAL, User.Roles.TECH],
+        4: [User.Roles.RESEARCHER, User.Roles.MEDICAL, User.Roles.TECH, User.Roles.GUARD],
+        5: [role.value for role in User.Roles],
+    }
+    if user.role not in allowed_roles[user.clearance_level]:
+        user.role = allowed_roles[user.clearance_level][-1]
+    user.save()
+
+for user in users + [superuser]:
+    update_clearance(user)
+
+print("✅ Seeding complete!")
