@@ -2,29 +2,26 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
-<link rel="stylesheet" href="{% static 'css/signup-form.css' %}" />
-
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/signup-form.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+  <div class="page-header">
     <h1>Edit Profile</h1>
-</div>
+  </div>
 
-<form method="post" enctype="multipart/form-data" class="form-container" autocomplete="off">
+  <form method="post" enctype="multipart/form-data" class="form-container" autocomplete="off">
     {% csrf_token %}
 
     {% if user_obj.avatar %}
-        <p>Current Avatar:</p>
-        <img src="{{ user_obj.avatar.url }}" alt="{{ user_obj.username }} Avatar" class="profile-preview" />
+      <p>Current Avatar:</p>
+      <img src="{{ user_obj.avatar.url }}" alt="{{ user_obj.username }} Avatar" class="profile-preview" />
     {% endif %}
 
-    <div class="form-fields">
-        {{ form.as_p }}
-    </div>
+    <div class="form-fields">{{ form.as_p }}</div>
 
     <button type="submit" class="btn submit">Save Changes</button>
     <a href="{% url 'profile' user_obj.pk %}" class="btn back">Cancel</a>
-</form>
+  </form>
 {% endblock %}

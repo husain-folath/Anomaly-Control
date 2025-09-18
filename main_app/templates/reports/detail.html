@@ -2,36 +2,41 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/reports/report-detail.css' %}">
+  <link rel="stylesheet" href="{% static 'css/reports/report-detail.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="report-detail-container">
-  <h1>Report #{{ report.id }}</h1>
+  <div class="report-detail-container">
+    <h1>Report #{{ report.id }}</h1>
 
-  <div class="report-meta">
-    <p><strong>Anomaly:</strong> 
-      <a href="{% url 'entity_detail' report.anomaly.id %}">
-        {{ report.anomaly.code }} - {{ report.anomaly.name }}
-      </a>
-    </p>
-    <p><strong>Filed By:</strong> {{ report.user.username }}</p>
-    <p><strong>Created At:</strong> {{ report.created_at|date:"Y-m-d H:i" }}</p>
-    <p><strong>Last Updated:</strong> {{ report.updated_at|date:"Y-m-d H:i" }}</p>
+    <div class="report-meta">
+      <p>
+        <strong>Anomaly:</strong>
+        <a href="{% url 'entity_detail' report.anomaly.id %}">{{ report.anomaly.code }} - {{ report.anomaly.name }}</a>
+      </p>
+      <p>
+        <strong>Filed By:</strong> {{ report.user.username }}
+      </p>
+      <p>
+        <strong>Created At:</strong> {{ report.created_at|date:'Y-m-d H:i' }}
+      </p>
+      <p>
+        <strong>Last Updated:</strong> {{ report.updated_at|date:'Y-m-d H:i' }}
+      </p>
+    </div>
+
+    <div class="report-content">
+      <h2>Summary</h2>
+      <p>{{ report.summary }}</p>
+
+      <h2>Description</h2>
+      <p>{{ report.description }}</p>
+    </div>
+
+    <div class="report-actions">
+      <a href="{% url 'report_index' %}" class="btn">← Back to Reports</a>
+      <a href="{% url 'report_update' report.id %}" class="btn">Edit</a>
+      <a href="{% url 'report_delete' report.id %}" class="btn delete">Delete</a>
+    </div>
   </div>
-
-  <div class="report-content">
-    <h2>Summary</h2>
-    <p>{{ report.summary }}</p>
-
-    <h2>Description</h2>
-    <p>{{ report.description }}</p>
-  </div>
-
-  <div class="report-actions">
-    <a href="{% url 'report_index' %}" class="btn">← Back to Reports</a>
-    <a href="{% url 'report_update' report.id %}" class="btn">Edit</a>
-    <a href="{% url 'report_delete' report.id %}" class="btn delete">Delete</a>
-  </div>
-</div>
 {% endblock %}

@@ -2,55 +2,56 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/incidents/incident-index.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/incidents/incident-index.css' %}" />
 {% endblock %}
 
 {% block content %}
-<h1>Incidents</h1>
+  <h1>Incidents</h1>
 
-<!-- Search Bar -->
-<div class="search-container">
+  <div class="search-container">
     <form method="get" action="">
-        <input type="text" name="q" placeholder="Search by ID, Anomaly code, Reporter, Severity, Status, or Date..." value="{{ request.GET.q }}">
-        <button type="submit" class="btn">Search</button>
+      <input type="text" name="q" placeholder="Search by ID, Anomaly code, Reporter, Severity, Status, or Date..." value="{{ request.GET.q }}" />
+      <button type="submit" class="btn">Search</button>
     </form>
-</div>
+  </div>
 
-{% if incidents %}
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Anomaly</th>
-        <th>Reporter</th>
-        <th>Severity</th>
-        <th>Status</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for incident in incidents %}
-      <tr>
-        <td>{{ incident.id }}</td>
-        <td><a href="{% url 'incident_detail' incident.id %}">{{ incident.title }}</a></td>
-        <td>{{ incident.anomaly.code }}</td>
-        <td>{{ incident.reporter.username }}</td>
-        <td>{{ incident.severity }}</td>
-        <td>{{ incident.status }}</td>
-        <td>{{ incident.date }}</td>
-        <td>
-          <a href="{% url 'incident_update' incident.id %}">Edit</a> |
-          <a href="{% url 'incident_delete' incident.id %}">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <p>No incidents found.</p>
-{% endif %}
+  {% if incidents %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Anomaly</th>
+          <th>Reporter</th>
+          <th>Severity</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for incident in incidents %}
+          <tr>
+            <td>{{ incident.id }}</td>
+            <td>
+              <a href="{% url 'incident_detail' incident.id %}">{{ incident.title }}</a>
+            </td>
+            <td>{{ incident.anomaly.code }}</td>
+            <td>{{ incident.reporter.username }}</td>
+            <td>{{ incident.severity }}</td>
+            <td>{{ incident.status }}</td>
+            <td>{{ incident.date }}</td>
+            <td>
+              <a href="{% url 'incident_update' incident.id %}">Edit</a> |
+              <a href="{% url 'incident_delete' incident.id %}">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No incidents found.</p>
+  {% endif %}
 
-<a href="{% url 'incident_create' %}" class="btn add-incident">Create New Incident</a>
+  <a href="{% url 'incident_create' %}" class="btn add-incident">Create New Incident</a>
 {% endblock %}

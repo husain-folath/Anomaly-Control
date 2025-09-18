@@ -3,25 +3,27 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/entities/entity-detail.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/entities/entity-detail.css' %}" />
 {% endblock %}
 
 {% block content %}
-<h1>{{ entity.code }} - {{ entity.name }}</h1>
+  <h1>{{ entity.code }} - {{ entity.name }}</h1>
 
-<p><strong>Object Class:</strong> {{ entity.object_class }}</p>
+  <p>
+    <strong>Object Class:</strong> {{ entity.object_class }}
+  </p>
 
-{% if entity.image %}
-    <img src="{{ entity.image.url }}" alt="{{ entity.name }}" class="entity-img" style="max-width:300px;">
-{% endif %}
+  {% if entity.image %}
+    <img src="{{ entity.image.url }}" alt="{{ entity.name }}" class="entity-img" style="max-width:300px;" />
+  {% endif %}
 
-<h2>Description</h2>
-<p>{{ entity.description }}</p>
+  <h2>Description</h2>
+  <p>{{ entity.description }}</p>
 
-<h2>Containment Procedures</h2>
-<p>{{ entity.containment_procedures }}</p>
+  <h2>Containment Procedures</h2>
+  <p>{{ entity.containment_procedures }}</p>
 
-<a href="{% url 'entity_index' %}" class="btn">Back to Entities</a>
-<a href="{% url 'entity_update' entity.id %}" class="btn">Edit</a>
-<a href="{% url 'entity_delete' entity.id %}" class="btn delete">Delete</a>
+  <a href="{% url 'entity_index' %}" class="btn">Back to Entities</a>
+  <a href="{% url 'entity_update' entity.id %}" class="btn">Edit</a>
+  <a href="{% url 'entity_delete' entity.id %}" class="btn delete">Delete</a>
 {% endblock %}

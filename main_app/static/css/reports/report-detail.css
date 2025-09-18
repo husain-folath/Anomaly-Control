@@ -1,34 +1,30 @@
-/* =========================
-   Report Detail Page
-========================= */
 
-/* Page Container */
 .report-detail-container {
   max-width: 800px;
   margin: 0 auto 30px auto;
   padding: 20px 25px;
-  background-color: #121212; /* deep dark background */
+  background-color: #121212;
   border-radius: 8px;
-  color: #ddd; /* light gray text */
+  color: #ddd; 
   font-family: 'Consolas', monospace;
   border: 1px solid #2c2c2c;
 }
 
-/* Page Title */
+
 .report-detail-container h1 {
   text-align: center;
-  color: #ff5c70; /* bright red accent */
+  color: #ff5c70; 
   font-size: 2rem;
   margin-bottom: 25px;
 }
 
-/* Meta Information */
+
 .report-meta p {
   margin-bottom: 12px;
 }
 
 .report-meta p strong {
-  color: #ff5c70; /* bright red labels */
+  color: #ff5c70; 
 }
 
 .report-meta a {
@@ -40,9 +36,9 @@
   color: #ffa3a3;
 }
 
-/* Report Content Sections */
+
 .report-content h2 {
-  color: #ff5c70; /* bright red headings */
+  color: #ff5c70; 
   margin-top: 20px;
   margin-bottom: 10px;
 }
@@ -52,7 +48,7 @@
   line-height: 1.5;
 }
 
-/* Action Buttons */
+
 .report-actions {
   text-align: center;
   margin-top: 20px;
@@ -62,8 +58,8 @@
   display: inline-block;
   padding: 10px 16px;
   margin: 5px 8px;
-  background-color: #3a3a3a; /* dark gray */
-  color: #ff5c70; /* bright red accent */
+  background-color: #3a3a3a; 
+  color: #ff5c70; 
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
@@ -75,7 +71,7 @@
   background-color: #5a5a5a;
 }
 
-/* Delete Button */
+
 .report-actions .btn.delete {
   background-color: #880e1f;
 }
@@ -85,7 +81,7 @@
   color: #121212;
 }
 
-/* Responsive */
+
 @media (max-width: 800px) {
   .report-detail-container {
     padding: 15px 20px;

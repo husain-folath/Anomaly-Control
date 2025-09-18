@@ -11,7 +11,7 @@ def calculate_clearance(user):
 
     total = reports_count + incidents_count + entities_count
 
-    # Example thresholds (you can adjust these)
+
     if total >= 20:
         return 5
     elif total >= 10:

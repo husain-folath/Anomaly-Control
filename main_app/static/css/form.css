@@ -1,30 +1,26 @@
-/* =========================
-   Entity, Incident, and Report Forms
-========================= */
 
-/* Page Header */
 .page-header h1 {
   text-align: center;
-  color: #ff5c70; /* bright red accent */
+  color: #ff5c70; 
   font-size: 2rem;
   margin-bottom: 25px;
   font-family: 'Consolas', monospace;
 }
 
-/* Form Container */
+
 .form-container {
   max-width: 450px;
   margin: 40px auto;
   padding: 25px;
-  background-color: #121212; /* deep dark background */
+  background-color: #121212; 
   border-radius: 8px;
   border: 1px solid #2c2c2c;
-  color: #ddd; /* light gray text */
+  color: #ddd; 
   font-family: 'Consolas', monospace;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-/* Table-based Form Fields */
+
 .form-container table {
   width: 100%;
   border-collapse: collapse;
@@ -38,7 +34,7 @@
 }
 
 .form-container table label {
-  color: #ff5c70; /* bright red labels */
+  color: #ff5c70; 
   font-weight: bold;
 }
 
@@ -63,7 +59,7 @@
   box-shadow: 0 0 0 3px rgba(255,92,112,0.15);
 }
 
-/* Current Image Preview (for entity forms) */
+
 .form-container img {
   display: block;
   margin: 10px auto 20px auto;
@@ -72,13 +68,13 @@
   border: 1px solid #333;
 }
 
-/* Submit Button */
+
 .btn.submit {
   width: 100%;
   padding: 12px;
   margin-top: 15px;
-  background-color: #3a3a3a; /* dark gray */
-  color: #ff5c70; /* bright red accent */
+  background-color: #3a3a3a; 
+  color: #ff5c70; 
   border: none;
   border-radius: 6px;
   font-weight: bold;
@@ -92,13 +88,13 @@
   background-color: #5a5a5a;
 }
 
-/* Back Button (for incident forms) */
+
 .btn.back {
   display: inline-block;
   width: 100%;
   padding: 10px 0;
   margin-top: 10px;
-  background-color: #2c2c2c; /* darker gray */
+  background-color: #2c2c2c; 
   color: #ff5c70;
   text-align: center;
   border-radius: 6px;
@@ -111,10 +107,10 @@
   background-color: #444444;
 }
 
-/* Error Messages */
+
 .error {
-  color: #d9534f; /* bright red */
-  background-color: #2a1a1a; /* dark background */
+  color: #d9534f; 
+  background-color: #2a1a1a; 
   border: 1px solid #880e1f;
   padding: 0.75rem;
   border-radius: 6px;
@@ -131,7 +127,7 @@
   margin-bottom: 5px;
 }
 
-/* Optional Links in Forms */
+
 .form-container a {
   color: #ff5c70;
   text-decoration: none;
@@ -141,7 +137,7 @@
   color: #ffa3a3;
 }
 
-/* Responsive */
+
 @media (max-width: 500px) {
   .form-container {
     padding: 20px;

@@ -1,15 +1,11 @@
-/* =========================
-   Signup Form Styling
-========================= */
 
-/* Page Header */
 .page-header {
   text-align: center;
   margin-top: 40px;
 }
 
 .page-header h1 {
-  color: #ff5c70; /* bright red accent */
+  color: #ff5c70;
   font-size: 2rem;
   margin-bottom: 15px;
   font-family: 'Consolas', monospace;
@@ -20,7 +16,7 @@
   margin-top: 10px;
 }
 
-/* Error Message */
+
 .error {
   color: #d9534f;
   background-color: #2a1a1a;
@@ -32,9 +28,9 @@
   font-weight: 500;
 }
 
-/* Form Container */
+
 .form-container {
-  max-width: 700px; /* made wider */
+  max-width: 700px; 
   margin: 30px auto 50px auto;
   padding: 25px;
   background-color: #121212;
@@ -45,39 +41,37 @@
   font-family: 'Consolas', monospace;
 }
 
-/* =========================
-   Two-column form fields
-========================= */
+
 .form-fields {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px; /* space between columns */
+  gap: 12px; 
 }
 
 .form-fields p {
-  flex: 1 1 48%; /* each field takes ~48% of the container */
+  flex: 1 1 48%; 
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
 
-/* Full width fields like textarea or file input */
+
 .form-fields p.full-width {
   flex: 1 1 100%;
 }
 
-/* Labels */
+
 .form-fields label {
   font-weight: bold;
   margin-bottom: 5px;
-  color: #ff5c70; /* bright red labels */
+  color: #ff5c70; 
 }
 
-/* Inputs, selects, textarea */
+
 .form-fields input,
 .form-fields select,
 .form-fields textarea {
-  padding: 6px 8px; /* reduced padding to make form shorter */
+  padding: 6px 8px; 
   border: 1px solid #333;
   border-radius: 6px;
   font-size: 1rem;
@@ -94,7 +88,7 @@
   box-shadow: 0 0 0 3px rgba(255,92,112,0.15);
 }
 
-/* Submit Button */
+
 .btn.submit {
   width: 100%;
   padding: 12px;
@@ -113,10 +107,10 @@
   background-color: #5a5a5a;
 }
 
-/* Responsive */
+
 @media (max-width: 800px) {
   .form-fields p {
-    flex: 1 1 100%; /* stack on smaller screens */
+    flex: 1 1 100%; 
   }
 }
 

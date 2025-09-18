@@ -1,14 +1,14 @@
-/* Incidents Page */
+
 h1 {
   text-align: center;
-  color: #e63946; /* bold accent like entities page */
+  color: #e63946; 
   margin-bottom: 25px;
   font-size: 2rem;
   text-shadow: 0 0 3px #000;
   font-family: 'Consolas', monospace;
 }
 
-/* Table Styling */
+
 .table {
   width: 100%;
   max-width: 1000px;
@@ -46,7 +46,7 @@ h1 {
   background-color: #2a2a2a;
 }
 
-/* Links inside table */
+
 .table td a {
   color: #e63946;
   text-decoration: none;
@@ -57,7 +57,7 @@ h1 {
   color: #ffa3a3;
 }
 
-/* Action links */
+
 .table td a.delete {
   color: #661111;
 }
@@ -66,7 +66,7 @@ h1 {
   color: #e63946;
 }
 
-/* Buttons */
+
 .btn {
   display: inline-block;
   padding: 8px 12px;
@@ -85,7 +85,7 @@ h1 {
   background-color: #5a5a5a;
 }
 
-/* Delete button */
+
 .btn.delete {
   background-color: #661111;
 }
@@ -94,7 +94,7 @@ h1 {
   background-color: #a22222;
 }
 
-/* Add New Incident Button */
+
 .btn.add-incident {
   display: block;
   max-width: 200px;
@@ -108,7 +108,7 @@ h1 {
   background-color: #444444;
 }
 
-/* No incidents message */
+
 p {
   text-align: center;
   color: #bbb;
@@ -116,7 +116,7 @@ p {
   margin-top: 20px;
 }
 
-/* Responsive Table */
+
 @media (max-width: 800px) {
   .table th,
   .table td {
@@ -134,7 +134,7 @@ p {
   }
 }
 
-/* Search Bar Styling */
+
 .search-container {
   text-align: center;
   margin-bottom: 25px;
@@ -147,7 +147,7 @@ p {
 
 .search-container input[type="text"],
 .search-container button {
-  height: 45px; /* same height for input & button */
+  height: 45px;
   box-sizing: border-box;
   font-size: 1rem;
   border: 2px solid #3a3a3a;

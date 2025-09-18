@@ -1,5 +1,4 @@
-# main_app/seed.py
-# anomalycontrol/main_app/seed.py
+
 
 import sys
 import os
@@ -7,27 +6,20 @@ import django
 import random
 from django.utils import timezone
 
-# -------------------------------
-# 1. Django setup
-# -------------------------------
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "anomalycontrol.settings")
 django.setup()
 
 from main_app.models import User, Entity, Report, Incident
 
-# -------------------------------
-# 2. Delete old data (exclude superuser)
-# -------------------------------
+
 print("🗑️  Deleting old data...")
 Report.objects.all().delete()
 Incident.objects.all().delete()
 Entity.objects.all().delete()
 User.objects.exclude(is_superuser=True).delete()
 
-# -------------------------------
-# 3. Create Users
-# -------------------------------
+
 print("👤 Creating users...")
 users_data = [
     {"username": "alice", "email": "alice@example.com"},
@@ -46,9 +38,7 @@ for udata in users_data:
     )
     users.append(user)
 
-# -------------------------------
-# 4. Create Entities
-# -------------------------------
+
 print("🛸 Creating entities...")
 
 object_classes = [
@@ -61,20 +51,20 @@ object_classes = [
 
 entities = []
 
-# Normal users: create 5 entities each
+
 for user in users:
     for i in range(5):
         e = Entity.objects.create(
             code=f"{user.username.upper()}-E{i+1:02d}",
             name=f"{user.username.capitalize()} Entity {i+1}",
-            object_class=random.choice(object_classes[:2]),  # safe or euclid
+            object_class=random.choice(object_classes[:2]),  
             description="This is a test entity.",
             containment_procedures="Standard containment procedures.",
             created_by=user
         )
         entities.append(e)
 
-# Superuser: create 10 entities to push clearance level
+
 superuser = User.objects.filter(is_superuser=True).first()
 for i in range(10):
     e = Entity.objects.create(
@@ -87,9 +77,7 @@ for i in range(10):
     )
     entities.append(e)
 
-# -------------------------------
-# 5. Create Reports
-# -------------------------------
+
 print("📝 Creating reports...")
 
 for user in users + [superuser]:
@@ -101,9 +89,7 @@ for user in users + [superuser]:
             description="This is a test report."
         )
 
-# -------------------------------
-# 6. Create Incidents
-# -------------------------------
+
 print("🚨 Creating incidents...")
 
 for user in users + [superuser]:
@@ -118,9 +104,7 @@ for user in users + [superuser]:
             date=timezone.now()
         )
 
-# -------------------------------
-# 7. Update Clearance Levels
-# -------------------------------
+
 print("⚡ Updating clearance levels...")
 
 def update_clearance(user):
@@ -141,7 +125,7 @@ def update_clearance(user):
     else:
         user.clearance_level = 1
 
-    # Ensure role is allowed
+
     allowed_roles = {
         1: [User.Roles.CLASS_D],
         2: [User.Roles.CLASS_D, User.Roles.RESEARCHER, User.Roles.MEDICAL],

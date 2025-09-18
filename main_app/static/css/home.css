@@ -1,8 +1,4 @@
-/* =========================
-   Home Page Styling
-========================= */
 
-/* Logo Section */
 .logo-container {
   text-align: center;
   margin-top: 50px;
@@ -16,7 +12,7 @@
 
 .site-title {
   font-size: 3rem;
-  color: #ff5c70; /* bright red accent */
+  color: #ff5c70; 
   margin: 0;
   font-family: 'Consolas', monospace;
 }
@@ -28,9 +24,7 @@
   font-style: italic;
 }
 
-/* =========================
-   Login Form
-========================= */
+
 .auth-container {
   max-width: 350px;
   margin: 40px auto;
@@ -67,7 +61,7 @@
   box-shadow: 0 0 0 3px rgba(255,92,112,0.15);
 }
 
-/* Submit Button */
+
 .btn.submit {
   width: 100%;
   padding: 12px;
@@ -85,7 +79,7 @@
   background-color: #5a5a5a;
 }
 
-/* Sign-up link under login */
+
 .auth-container .signup-link {
   text-align: center;
   margin-top: 12px;
@@ -104,9 +98,7 @@
   text-decoration: underline;
 }
 
-/* =========================
-   Dashboard Links
-========================= */
+
 .dashboard-links {
   text-align: center;
   margin: 40px auto;
@@ -142,7 +134,7 @@
   background-color: #5a5a5a;
 }
 
-/* Responsive */
+
 @media (max-width: 500px) {
   .auth-container,
   .dashboard-links ul {

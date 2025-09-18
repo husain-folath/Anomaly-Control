@@ -2,33 +2,35 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+  <div class="page-header">
     <h1>
-        {% if object %}
-            Update Entity
-        {% else %}
-            Create Entity
-        {% endif %}
+      {% if object %}
+        Update Entity
+      {% else %}
+        Create Entity
+      {% endif %}
     </h1>
-</div>
+  </div>
 
-<form method="post" enctype="multipart/form-data" class="form-container">
+  <form method="post" enctype="multipart/form-data" class="form-container">
     {% csrf_token %}
 
     {% if object and object.image %}
-        <p>Current Image:</p>
-        <img src="{{ object.image.url }}" alt="{{ object.name }}" style="max-width:200px;">
+      <p>Current Image:</p>
+      <img src="{{ object.image.url }}" alt="{{ object.name }}" style="max-width:200px;" />
     {% endif %}
 
-    <table>
-        {{ form.as_table }}
-    </table>
+    <table>{{ form.as_table }}</table>
     <button type="submit" class="btn submit">
-        {% if object %}Update{% else %}Create{% endif %}
+      {% if object %}
+        Update
+      {% else %}
+        Create
+      {% endif %}
     </button>
-</form>
+  </form>
 {% endblock %}

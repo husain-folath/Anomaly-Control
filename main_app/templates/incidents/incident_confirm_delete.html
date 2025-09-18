@@ -2,18 +2,18 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/confirm_delete_form.css' %}">
+  <link rel="stylesheet" href="{% static 'css/confirm_delete_form.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+  <div class="page-header">
     <h1>Delete Incident</h1>
     <p>Are you sure you want to delete the incident: "{{ object }}"?</p>
-</div>
+  </div>
 
-<form method="post">
+  <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn delete">Yes, delete</button>
     <a href="{% url 'incident_index' %}" class="btn cancel">Cancel</a>
-</form>
+  </form>
 {% endblock %}

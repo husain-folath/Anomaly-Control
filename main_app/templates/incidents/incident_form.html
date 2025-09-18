@@ -2,22 +2,30 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>{% if form.instance.pk %}Update{% else %}Create{% endif %} Incident</h1>
-</div>
+  <div class="page-header">
+    <h1>
+      {% if form.instance.pk %}
+        Update
+      {% else %}
+        Create
+      {% endif %}Incident
+    </h1>
+  </div>
 
-<form method="post" class="form-container">
+  <form method="post" class="form-container">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
+    <table>{{ form.as_table }}</table>
     <button type="submit" class="btn submit">
-        {% if form.instance.pk %}Update{% else %}Create{% endif %}
+      {% if form.instance.pk %}
+        Update
+      {% else %}
+        Create
+      {% endif %}
     </button>
     <a href="{% url 'incident_index' %}" class="btn back">Back</a>
-</form>
+  </form>
 {% endblock %}

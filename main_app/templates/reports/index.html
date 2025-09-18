@@ -2,56 +2,55 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/reports/report-index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/reports/report-index.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="reports-container">
-  <h1>Reports</h1>
+  <div class="reports-container">
+    <h1>Reports</h1>
 
-  <!-- Search Bar -->
-  <div class="search-container">
+    <div class="search-container">
       <form method="get" action="">
-          <input type="text" name="q" placeholder="Search by ID, Anomaly code, User, Summary, or Date..." value="{{ request.GET.q }}">
-          <button type="submit" class="btn">Search</button>
+        <input type="text" name="q" placeholder="Search by ID, Anomaly code, User, Summary, or Date..." value="{{ request.GET.q }}" />
+        <button type="submit" class="btn">Search</button>
       </form>
-  </div>
+    </div>
 
-  {% if reports %}
-    <table class="reports-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Anomaly</th>
-          <th>User</th>
-          <th>Summary</th>
-          <th>Created At</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for report in reports %}
-        <tr>
-          <td>{{ report.id }}</td>
-          <td>{{ report.anomaly.code }}</td>
-          <td>{{ report.user.username }}</td>
-          <td>{{ report.summary|truncatechars:50 }}</td>
-          <td>{{ report.created_at|date:"Y-m-d H:i" }}</td>
-          <td>
-            <a href="{% url 'report_detail' report.id %}">View</a> | 
-            <a href="{% url 'report_update' report.id %}">Edit</a> | 
-            <a href="{% url 'report_delete' report.id %}">Delete</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No reports available.</p>
-  {% endif %}
+    {% if reports %}
+      <table class="reports-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Anomaly</th>
+            <th>User</th>
+            <th>Summary</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for report in reports %}
+            <tr>
+              <td>{{ report.id }}</td>
+              <td>{{ report.anomaly.code }}</td>
+              <td>{{ report.user.username }}</td>
+              <td>{{ report.summary|truncatechars:50 }}</td>
+              <td>{{ report.created_at|date:'Y-m-d H:i' }}</td>
+              <td>
+                <a href="{% url 'report_detail' report.id %}">View</a> |
+                <a href="{% url 'report_update' report.id %}">Edit</a> |
+                <a href="{% url 'report_delete' report.id %}">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No reports available.</p>
+    {% endif %}
 
-  <div class="add-report">
-    <a href="{% url 'report_create' %}" class="btn add-report-btn">+ Create Report</a>
+    <div class="add-report">
+      <a href="{% url 'report_create' %}" class="btn add-report-btn">+ Create Report</a>
+    </div>
   </div>
-</div>
 {% endblock %}

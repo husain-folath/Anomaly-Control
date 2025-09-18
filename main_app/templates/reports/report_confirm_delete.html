@@ -2,18 +2,20 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/confirm_delete_form.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/confirm_delete_form.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-  <h1>Delete Report</h1>
-  <p>Are you sure you want to delete the report: <strong>{{ object.summary }}</strong>?</p>
-</div>
+  <div class="page-header">
+    <h1>Delete Report</h1>
+    <p>
+      Are you sure you want to delete the report: <strong>{{ object.summary }}</strong>?
+    </p>
+  </div>
 
-<form method="post" class="form-container">
-  {% csrf_token %}
-  <button type="submit" class="btn delete">Yes, Delete</button>
-  <a href="{% url 'report_index' %}" class="btn cancel">Cancel</a>
-</form>
+  <form method="post" class="form-container">
+    {% csrf_token %}
+    <button type="submit" class="btn delete">Yes, Delete</button>
+    <a href="{% url 'report_index' %}" class="btn cancel">Cancel</a>
+  </form>
 {% endblock %}

@@ -17,9 +17,7 @@ from .forms import CustomUserCreationForm, ReportForm, IncidentForm, EntityForm,
 
 User = get_user_model()
 
-# ======================
-# Clearance Mapping
-# ======================
+
 CLEARANCE_VISIBILITY = {
     1: [Entity.ObjectClass.SAFE],
     2: [Entity.ObjectClass.SAFE, Entity.ObjectClass.EUCLID],
@@ -28,18 +26,14 @@ CLEARANCE_VISIBILITY = {
     5: [Entity.ObjectClass.SAFE, Entity.ObjectClass.EUCLID, Entity.ObjectClass.KETER, Entity.ObjectClass.THAUMIEL, Entity.ObjectClass.ARCHON],
 }
 
-# ======================
-# HOME & ABOUT
-# ======================
+
 class Home(LoginView):
     template_name = 'home.html'
 
 def about(request):
     return render(request, 'about.html')
 
-# ======================
-# ENTITIES
-# ======================
+
 @login_required
 def entity_index(request):
     allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
@@ -81,9 +75,7 @@ class EntityDelete(LoginRequiredMixin, DeleteView):
     template_name = 'entities/entity_confirm_delete.html'
     success_url = reverse_lazy('entity_index')
 
-# ======================
-# REPORTS
-# ======================
+
 @login_required
 def report_index(request):
     allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
@@ -117,7 +109,7 @@ class ReportCreate(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user  # pass user to the form
+        kwargs['user'] = self.request.user  
         return kwargs
 
     def form_valid(self, form):
@@ -134,9 +126,7 @@ class ReportDelete(LoginRequiredMixin, DeleteView):
     template_name = 'reports/report_confirm_delete.html'
     success_url = reverse_lazy('report_index')
 
-# ======================
-# INCIDENTS
-# ======================
+
 @login_required
 def incident_index(request):
     allowed_classes = CLEARANCE_VISIBILITY.get(request.user.clearance_level, [Entity.ObjectClass.SAFE])
@@ -190,9 +180,7 @@ class IncidentDelete(LoginRequiredMixin, DeleteView):
     template_name = 'incidents/incident_confirm_delete.html'
     success_url = reverse_lazy('incident_index')
 
-# ======================
-# SIGNUP
-# ======================
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -209,9 +197,7 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
 
-# ======================
-# USER PROFILES
-# ======================
+
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'users/profile.html'

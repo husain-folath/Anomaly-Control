@@ -5,13 +5,11 @@ from .models import User, Report, Incident, Entity
 
 User = get_user_model()
 
-# ------------------------
-# User Signup Form
-# ------------------------
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        # Only ask for personal info and password
+        
         fields = (
             "username",
             "email",
@@ -24,16 +22,14 @@ class CustomUserCreationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.clearance_level = 1          # force level 1
-        user.role = User.Roles.CLASS_D    # force Class-D role
+        user.clearance_level = 1          
+        user.role = User.Roles.CLASS_D    
         if commit:
             user.save()
         return user
 
 
-# ------------------------
-# User Update Form
-# ------------------------
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
@@ -42,10 +38,10 @@ class UserUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Show clearance_level as read-only
+
         self.fields["clearance_level"].disabled = True
 
-        # Restrict roles based on current clearance
+
         level = self.instance.clearance_level
         allowed_roles = self.get_allowed_roles(level)
         self.fields["role"].choices = [
@@ -69,22 +65,20 @@ class UserUpdateForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        # Enforce allowed role
+
         allowed_roles = self.get_allowed_roles(user.clearance_level)
         if user.role not in allowed_roles:
-            user.role = allowed_roles[-1]  # highest role for clearance
+            user.role = allowed_roles[-1]  
         if commit:
             user.save()
         return user
 
 
-# ------------------------
-# Entity Form
-# ------------------------
+
 class EntityForm(forms.ModelForm):
     class Meta:
         model = Entity
-        # exclude created_by so it’s set in the view
+
         fields = [
             "code",
             "name",
@@ -103,14 +97,12 @@ class EntityForm(forms.ModelForm):
         }
 
 
-# ------------------------
-# Report Form
-# ------------------------
+
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = [
-            'anomaly',   # ForeignKey to Entity
+            'anomaly',  
             'summary',
             'description',
         ]
@@ -121,7 +113,7 @@ class ReportForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)  # pass user from view
+        user = kwargs.pop('user', None)  
         super().__init__(*args, **kwargs)
 
         if user:
@@ -130,14 +122,12 @@ class ReportForm(forms.ModelForm):
             self.fields['anomaly'].queryset = Entity.objects.filter(object_class__in=allowed_classes)
 
 
-# ------------------------
-# Incident Form
-# ------------------------
+
 class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
         fields = [
-            'anomaly',       # ForeignKey to Entity
+            'anomaly',       
             'title',
             'severity',
             'short_description',

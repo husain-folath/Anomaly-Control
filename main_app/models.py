@@ -4,9 +4,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-# =========================
-# USER MODEL
-# =========================
+
 class User(AbstractUser):
     class Roles(models.TextChoices):
         CLASS_D = "Class-D Personnel", "Class-D Personnel"
@@ -35,9 +33,7 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.id})
 
-# =========================
-# ENTITY MODEL
-# =========================
+
 class Entity(models.Model):
     class ObjectClass(models.TextChoices):
         SAFE = "Safe", "Safe"
@@ -70,9 +66,7 @@ class Entity(models.Model):
     def get_absolute_url(self):
         return reverse('entity_detail', kwargs={'pk': self.id})
 
-# =========================
-# REPORT MODEL
-# =========================
+
 class Report(models.Model):
     anomaly = models.ForeignKey(Entity, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -87,9 +81,7 @@ class Report(models.Model):
     def get_absolute_url(self):
         return reverse('report_detail', kwargs={'pk': self.id})
 
-# =========================
-# INCIDENT MODEL
-# =========================
+
 class Incident(models.Model):
     class SeverityChoices(models.TextChoices):
         LOW = "Low", "Low"

@@ -2,51 +2,48 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
 {% endblock %}
 
 {% block content %}
-{% comment %} <header class="header-bar">
-  <div class="header-left">
-    <h1 class="logo-text">SCP <span class="foundation">Foundation</span></h1>
-    <p class="motto">Secure, Contain, Protect</p>
-  </div>
-  <nav class="header-nav">
-    <ul>
-      <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="{% url 'about' %}">About</a></li>
-    </ul>
-  </nav>
-</header> {% endcomment %}
+  <section class="logo-container">
+    <div class="logo">
+      <img src="{% static 'images/scp-foundation-logo.png' %}" alt="Anomaly Control Logo" />
+    </div>
+    <h1 class="site-title">Anomaly Control</h1>
+    <p class="tagline">Securing, Containing, and Protecting the Unknown.</p>
+  </section>
 
-<section class="logo-container">
-  <div class="logo">
-    <img src="{% static 'images/scp-foundation-logo.png' %}" alt="Anomaly Control Logo" />
-  </div>
-  <h1 class="site-title">Anomaly Control</h1>
-  <p class="tagline">Securing, Containing, and Protecting the Unknown.</p>
-</section>
-
-{% if not user.is_authenticated %}
-<section class="auth-container">
-  <form action="{% url 'home' %}" method="post" class="login-form">
-    <h2>Login</h2>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}">
-    <button type="submit" class="btn submit">Login</button>
-  </form>
-  <p class="signup-link">Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
-</section>
-{% else %}
-<section class="dashboard-links">
-  <h2>Welcome, {{ user.username }}</h2>
-  <ul>
-    <li><a href="{% url 'entity_index' %}">View Entities</a></li>
-    <li><a href="{% url 'incident_index' %}">View Incidents</a></li>
-    <li><a href="{% url 'report_index' %}">View Reports</a></li>
-    <li><a href="{% url 'about' %}">About Anomaly Control</a></li>
-  </ul>
-</section>
-{% endif %}
+  {% if not user.is_authenticated %}
+    <section class="auth-container">
+      <form action="{% url 'home' %}" method="post" class="login-form">
+        <h2>Login</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button type="submit" class="btn submit">Login</button>
+      </form>
+      <p class="signup-link">
+        Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>
+      </p>
+    </section>
+  {% else %}
+    <section class="dashboard-links">
+      <h2>Welcome, {{ user.username }}</h2>
+      <ul>
+        <li>
+          <a href="{% url 'entity_index' %}">View Entities</a>
+        </li>
+        <li>
+          <a href="{% url 'incident_index' %}">View Incidents</a>
+        </li>
+        <li>
+          <a href="{% url 'report_index' %}">View Reports</a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">About Anomaly Control</a>
+        </li>
+      </ul>
+    </section>
+  {% endif %}
 {% endblock %}
