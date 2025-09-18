@@ -1,8 +1,12 @@
 # 🕵️ Anomaly Control
 
+## 📖 About Page 
+
+![About Page](docs/about-page.png)
+
 **Secure. Contain. Protect.**  
 A fullstack web application for managing and exploring anomalies inspired by the SCP Foundation universe.  
-Users can browse classified files, view containment procedures, and access restricted data based on their clearance level.  
+Users can browse classified files, view containment procedures, and access restricted data based on their clearance level and assigned role.  
 
 ---
 
@@ -10,9 +14,10 @@ Users can browse classified files, view containment procedures, and access restr
 
 **Anomaly Control** is a fictional database system designed to simulate how a secret organization might track and manage dangerous or mysterious anomalies.  
 
-The app combines **Django (backend)** and optionally **FastAPI / React (frontend)** to provide:  
+The app uses **Django** to provide:  
 - A secure anomaly archive  
-- Clearance-based access restrictions  
+- Clearance- and role-based access restrictions  
+- Reports and incident tracking  
 - An immersive experience for fans of mysterious phenomena  
 
 Core focus:  
@@ -22,25 +27,36 @@ Core focus:
 
 ---
 
+## 📑 Planning Materials
+
+- 📋 [Trello Board](https://trello.com/b/AD2NOa4V/anomaly-control) – Task management and project planning  
+- 🗂️ [Draw.io Diagrams (ERD & Wireframes)](https://app.diagrams.net/#G1T4fY1rV5qrs44AFR3wSxxRObTC970gm1#%7B%22pageId%22%3A%22jnQW0kWYOzWuQQ7AjmSw%22%7D) – Entity-Relationship Diagram & UI Wireframes  
+
+---
+
 ## 🚀 Features (MVP)
 
 - 🔑 User authentication & clearance levels (1–5)  
-- 📂 Anomaly entries with:
-  - ID (e.g., AC-173)  
-  - Classification (Safe, Euclid, Keter, etc.)  
+- 🧑‍🔬 Role-based access (Researcher, Guard, Class-D, Site Director, O5, etc.)  
+- 📂 Entity (Anomaly) entries with:
+  - Code (e.g., AC-173)  
+  - Name  
+  - Object class (Safe, Euclid, Keter, Thaumiel, Archon)  
   - Containment procedures  
   - Description  
-  - Optional media (images, documents)  
-- 🛠️ Admin dashboard for managing anomalies  
+  - Optional media (images)  
+  - Created by user reference  
+- 📝 Reports linked to entities  
+- ⚠️ Incidents with severity, status, and reporter tracking  
+- 🛠️ Admin dashboard for managing anomalies, reports, and incidents  
 - 🌐 REST API endpoints for anomaly data  
 
 ---
 
 ## 🌟 Future Features
 
-- 📜 Incident Reports linked to anomalies  
-- 👤 Personnel management (researchers, agents, security staff)  
-- 🧪 Experiment logs & ethics reviews  
+- 📜 Experiment logs & ethics reviews  
+- 👥 Personnel database with transfer history  
 - 🏢 Facility/Site database with assigned anomalies  
 - 🕵️ Groups of Interest (GoIs) and anomaly conflicts  
 - 🎲 “File of the Day” anomaly spotlight  
@@ -51,32 +67,51 @@ Core focus:
 ## 🗂️ Data Models (MVP)
 
 ### User
+Extends Django’s `AbstractUser`  
 - `id` (int, PK)  
 - `username` (string)  
 - `email` (string)  
 - `password` (hashed)  
 - `clearance_level` (int: 1–5)  
-
-### Classification
-- `id` (int, PK)  
-- `name` (string: Safe, Euclid, Keter, Neutralized, etc.)  
-- `description` (text)  
-
-### Anomaly
-- `id` (int, PK)  
-- `anomaly_id` (string, e.g., AC-001)  
-- `name` (string)  
-- `classification_id` (FK → Classification)  
-- `containment_procedures` (text)  
-- `description` (text)  
-- `image` (file, optional)  
-- `status` (string: Active, Neutralized, Pending)  
+- `role` (choice: Class-D, Researcher, Security Guard, O5, Site Director, Medical, Technician)  
+- `avatar` (image, optional)  
 
 ---
 
-## 🛠️ Installation & Setup
+### Entity (Anomaly)
+- `id` (int, PK)  
+- `code` (string, unique, e.g., AC-001)  
+- `name` (string)  
+- `object_class` (choice: Safe, Euclid, Keter, Thaumiel, Archon)  
+- `description` (text)  
+- `containment_procedures` (text)  
+- `image` (file, optional)  
+- `created_by` (FK → User)  
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/anomaly-control.git
-   cd anomaly-control
+---
+
+### Report
+- `id` (int, PK)  
+- `anomaly` (FK → Entity)  
+- `user` (FK → User)  
+- `summary` (text)  
+- `description` (text)  
+- `created_at` (datetime, auto)  
+- `updated_at` (datetime, auto)  
+
+---
+
+### Incident
+- `id` (int, PK)  
+- `anomaly` (FK → Entity)  
+- `reporter` (FK → User)  
+- `title` (string)  
+- `severity` (choice: Low, Medium, High, Critical)  
+- `short_description` (text)  
+- `date` (datetime, auto)  
+- `status` (choice: Resolved, Ongoing, Under Investigation)  
+
+---
+
+### ERD
+![ERD](docs/ERD.png)
